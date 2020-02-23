@@ -19,6 +19,9 @@ if (sessionStorage.hasOwnProperty("api_token")) {
 
 Vue.config.productionTip = false
 Vue.prototype.$http = http
+Vue.prototype.$setLoader = function(loading) {
+  this.$store.commit("loading", loading)
+}
 
 require("./plugins/moment")
 

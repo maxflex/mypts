@@ -33,7 +33,14 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer />
-      <v-btn rounded class="px-5" color="accent" :loading="adding" @click="add">
+      <v-btn
+        rounded
+        large
+        class="px-5"
+        color="accent"
+        :loading="adding"
+        @click="add"
+      >
         Добавить
       </v-btn>
       <v-spacer />
@@ -72,9 +79,9 @@ export default {
         comment: this.item.comment,
       }
       this.$http
-        .get(apiUrl, { params })
+        .get([apiUrl, "autocomplete"].join("/"), { params })
         .then(r => {
-          this.items = r.data.data
+          this.items = r.data
         })
         .finally(() => (this.isLoading = false))
     }, 300)

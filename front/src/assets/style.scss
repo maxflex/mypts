@@ -10,3 +10,14 @@
 .full-width {
   width: 100%;
 }
+
+.v-bottom-navigation {
+  & .v-btn__content {
+    justify-content: flex-end;
+    padding-top: 10px;
+  }
+}
+
+.relative {
+  position: relative;
+}

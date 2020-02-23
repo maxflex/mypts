@@ -10,6 +10,7 @@ export default new Vuex.Store({
       text: "",
       color: "red",
     },
+    loading: false,
   },
   mutations: {
     message(state, { text, color = "success" }) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
         color,
         show: true,
       }
+    },
+    loading(state, loading) {
+      state.loading = loading
     },
   },
   actions: {},

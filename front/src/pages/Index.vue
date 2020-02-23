@@ -24,7 +24,7 @@
           class="mt-10 caption justify-center flex-items"
           style="opacity: .5"
         >
-          <Pts class="mr-1" :value="pts.today" />
+          <Pts class="mr-1" :value="pts.yesterday" />
           <span class="grey--text">вчера</span>
         </div>
       </div>
