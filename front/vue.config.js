@@ -5,6 +5,10 @@ module.exports = {
     short_name: "My PTS",
     themeColor: "#f3377a",
     backgroundColor: "#ffffff",
+    msTileColor: "#ffffff",
     display: "fullscreen",
+    manifestOptions: {
+      background_color: "#ffffff",
+    },
   },
 }
