@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-navigation color="accent" height="80" app>
+  <v-bottom-navigation color="accent" height="90" app>
     <v-btn exact :to="{ name: 'PageIndex' }">
       <span>Главная</span>
       <v-icon>mdi-account</v-icon>
