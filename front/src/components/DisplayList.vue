@@ -2,7 +2,7 @@
   <div :class="{ invisible: items === undefined }">
     <div v-if="items !== undefined">
       <slot name="items" :items="items" v-if="items.length > 0"></slot>
-      <NoData :no-elevation="noElevation" v-else />
+      <NoData v-else />
     </div>
     <InfiniteLoading
       spinner="waveDots"
@@ -17,6 +17,7 @@
 
 <script>
 import InfiniteLoading from "vue-infinite-loading"
+import NoData from "@/components/NoData"
 
 export default {
   props: {
@@ -29,12 +30,9 @@ export default {
         return {}
       },
     },
-
-    // <NoData /> elevation
-    noElevation: Boolean,
   },
 
-  components: { InfiniteLoading },
+  components: { InfiniteLoading, NoData },
 
   data() {
     return {

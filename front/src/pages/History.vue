@@ -1,19 +1,11 @@
 <template>
   <v-row>
     <v-col align="center">
-      <!-- <v-progress-circular
-        v-if="pts === undefined"
-        color="accent"
-        indeterminate
-        size="64"
-      ></v-progress-circular> -->
-      <div>
-        <DisplayList :api-url="apiUrl">
-          <template v-slot:items="{ items }">
-            <History :items="items" />
-          </template>
-        </DisplayList>
-      </div>
+      <DisplayList :api-url="apiUrl">
+        <template v-slot:items="{ items }">
+          <History :items="items" />
+        </template>
+      </DisplayList>
     </v-col>
   </v-row>
 </template>
