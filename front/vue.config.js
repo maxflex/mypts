@@ -3,8 +3,8 @@ module.exports = {
   pwa: {
     name: "My PTS",
     short_name: "My PTS",
-    theme_color: "#f3377a",
-    background_color: "#ffffff",
+    themeColor: "#f3377a",
+    backgroundColor: "#ffffff",
     display: "fullscreen",
   },
 }
