@@ -6,14 +6,16 @@ import vuetify from "@/plugins/vuetify"
 require("@/assets/style.scss")
 import axios from "axios"
 require("@/plugins/filters")
+import Cookies from "js-cookie"
 
 const http = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
 })
 
-if (sessionStorage.hasOwnProperty("api_token")) {
+const apiToken = Cookies.get("api_token")
+if (apiToken !== undefined) {
   http.defaults.headers.common = {
-    Authorization: `Bearer ${sessionStorage.getItem("api_token")}`,
+    Authorization: `Bearer ${apiToken}`,
   }
 }
 

@@ -1,12 +1,7 @@
 <template>
   <v-row>
     <v-col align="center">
-      <v-progress-circular
-        v-if="pts === undefined"
-        color="accent"
-        indeterminate
-        size="64"
-      ></v-progress-circular>
+      <Loader v-if="pts === undefined" />
       <div v-else>
         <div class="justify-center flex-items">
           <div class="display-4 font-weight-bold mr-2 accent--text">
@@ -35,9 +30,10 @@
 <script>
 const apiUrl = "pts"
 import Pts from "@/components/Pts"
+import Loader from "@/components/Loader"
 
 export default {
-  components: { Pts },
+  components: { Pts, Loader },
 
   data() {
     return {

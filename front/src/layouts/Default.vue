@@ -1,25 +1,21 @@
 <template>
-  <div id="app">
-    <v-app>
-      <v-content>
-        <v-container fill-height fluid>
-          <router-view></router-view>
-        </v-container>
-      </v-content>
-      <Menu />
-      <v-snackbar
-        v-model="$store.state.snackBar.show"
-        :timeout="6000"
-        :color="$store.state.snackBar.color"
-        top
-      >
-        <div
-          class="full-width text-center"
-          v-html="$store.state.snackBar.text"
-        ></div>
-      </v-snackbar>
-    </v-app>
-  </div>
+  <v-content>
+    <v-container fill-height fluid>
+      <router-view></router-view>
+    </v-container>
+    <Menu />
+    <v-snackbar
+      v-model="$store.state.snackBar.show"
+      :timeout="6000"
+      :color="$store.state.snackBar.color"
+      top
+    >
+      <div
+        class="full-width text-center"
+        v-html="$store.state.snackBar.text"
+      ></div>
+    </v-snackbar>
+  </v-content>
 </template>
 
 <script>
