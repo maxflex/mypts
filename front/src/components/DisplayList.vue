@@ -66,7 +66,7 @@ export default {
               this.items === undefined
                 ? data.data
                 : this.items.concat(data.data)
-            if (data.current_page === data.last_page) {
+            if (data.meta.current_page === data.meta.last_page) {
               $state.complete()
             } else {
               $state.loaded()

@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col align="center">
+    <v-col class="pa-0" align="center">
       <DisplayList :api-url="apiUrl">
         <template v-slot:items="{ items }">
           <History :items="items" />

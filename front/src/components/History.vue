@@ -1,25 +1,23 @@
 <template>
   <v-simple-table>
-    <tr
-      v-for="(item, index) in items"
-      :key="item.id"
-      :class="{ 'day-separator': isNextDay(index) }"
-    >
-      <td width="1" class="next-day-td">
-        <div v-if="isNextDay(index)" class="next-day">
-          <span>
-            {{ $moment(item.created_at).format("DD MMMM") }}
-          </span>
-        </div>
-      </td>
-      <td>
-        {{ item.comment }}
-      </td>
+    <tbody>
+      <tr v-for="(item, index) in items" :key="item.id">
+        <td width="1" class="next-day-td">
+          <div v-if="isNextDay(index)" class="next-day">
+            <span>
+              {{ $moment(item.created_at).format("DD MMMM") }}
+            </span>
+          </div>
+        </td>
+        <td>
+          {{ item.comment }}
+        </td>
 
-      <td class="text-right">
-        <Pts :value="item.pts" />
-      </td>
-    </tr>
+        <td class="text-right">
+          <Pts :value="item.pts" />
+        </td>
+      </tr>
+    </tbody>
   </v-simple-table>
 </template>
 
@@ -52,11 +50,6 @@ export default {
 </script>
 
 <style lang="scss">
-.day-separator {
-  & td {
-    border-top: 1px solid #f5f5f5;
-  }
-}
 .next-day {
   width: calc(100vw - 24px);
   position: absolute;
