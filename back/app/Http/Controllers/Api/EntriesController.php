@@ -11,7 +11,7 @@ class EntriesController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Entry::latest();
+        $query = auth()->user()->entries()->latest();
 
 
         return $this->handleIndexRequest($request, $query, EntryResource::class);
@@ -19,7 +19,9 @@ class EntriesController extends Controller
 
     public function store(Request $request)
     {
-        $action = Entry::create($request->all());
+        $action = auth()->user()->entries()->create(
+            $request->all()
+        );
         return $action;
     }
 
@@ -29,7 +31,7 @@ class EntriesController extends Controller
             'comment' => ['required', 'min:3']
         ]);
 
-        return Entry::latest()
+        return auth()->user()->entries()->latest()
             ->where('comment', 'like', "%{$request->comment}%")
             ->take(10)
             ->get();

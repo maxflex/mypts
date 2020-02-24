@@ -11,6 +11,11 @@ class User extends Authenticatable
         'name', 'email',  'password',
     ];
 
+    public function entries()
+    {
+        return $this->hasMany(Entry::class);
+    }
+
     protected static function boot()
     {
         parent::boot();
