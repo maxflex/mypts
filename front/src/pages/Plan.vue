@@ -32,7 +32,12 @@
       <div v-if="loading" class="align-self-center full-width text-center">
         <Loader />
       </div>
-      <PlanList v-else :items="items" />
+      <PlanList class="mt-2" v-else-if="items.length > 0" :items="items" />
+      <div class="grey--text align-self-center full-width text-center" v-else>
+        <div>
+          на {{ mode === modes.today ? "сегодня" : "завтра" }} планов нет
+        </div>
+      </div>
     </div>
     <v-dialog v-model="dialog">
       <v-card outlined class="full-width">
@@ -90,10 +95,11 @@ const apiUrl = "plans"
 import PlanList from "@/components/PlanList"
 import Pts from "@/components/Pts"
 import Loader from "@/components/Loader"
+import NoData from "@/components/NoData"
 import { debounce } from "lodash"
 
 export default {
-  components: { PlanList, Pts, Loader },
+  components: { PlanList, Pts, Loader, NoData },
 
   data() {
     const modes = {

@@ -7,7 +7,7 @@
 
     <v-btn :to="{ name: 'PagePlan' }">
       <span>План</span>
-      <v-icon>mdi-checkbox-multiple-marked</v-icon>
+      <v-icon>mdi-file-document-box-check</v-icon>
     </v-btn>
 
     <v-btn :to="{ name: 'PageHistory' }">
