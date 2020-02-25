@@ -6,7 +6,7 @@
         <div v-else>
           <div class="justify-center flex-items">
             <div class="display-4 font-weight-bold mr-2 accent--text">
-              {{ pts.total | formatPts }}
+              {{ pts.currentPts | formatPts }}
             </div>
             <span class="subtitle-1 grey--text">
               pts

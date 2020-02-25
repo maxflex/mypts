@@ -10,11 +10,10 @@ class PtsController extends Controller
 {
     public function index()
     {
-        $base = 1200;
         return [
-            'total' =>  $base + Entry::sum('pts'),
-            'today' =>  Entry::whereDate('created_at', Carbon::today())->sum('pts'),
-            'yesterday' =>  Entry::whereDate('created_at', Carbon::yesterday())->sum('pts'),
+            'currentPts' =>  auth()->user()->currentPts,
+            'today' =>  auth()->user()->entries()->whereDate('created_at', Carbon::today())->sum('pts'),
+            'yesterday' =>  auth()->user()->entries()->whereDate('created_at', Carbon::yesterday())->sum('pts'),
         ];
     }
 }
