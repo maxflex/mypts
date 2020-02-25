@@ -2,7 +2,6 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Enums\RecordType;
 use App\Models\Record;
 use Faker\Generator as Faker;
 

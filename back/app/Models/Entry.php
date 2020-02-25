@@ -17,7 +17,7 @@ class Entry extends Model
     {
         parent::boot();
 
-        static::created(fn ($entry) => $entry->user->updateRecords());
-        static::deleted(fn ($entry) => $entry->user->updateRecords());
+        static::created(fn ($entry) => $entry->user->updateRecord());
+        static::deleted(fn ($entry) => $entry->user->updateRecord());
     }
 }

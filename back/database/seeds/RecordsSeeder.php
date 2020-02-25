@@ -1,9 +1,7 @@
 <?php
 
-use App\Enums\RecordType;
 use App\Models\Record;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class RecordsSeeder extends Seeder
@@ -17,13 +15,10 @@ class RecordsSeeder extends Seeder
     {
         foreach (User::all() as $user) {
             $currentPts = $user->currentPts;
-            foreach (RecordType::getValues() as $type) {
-                factory(Record::class)->create([
-                    'type' => $type,
-                    'user_id' => $user->id,
-                    'pts' => $currentPts
-                ]);
-            }
+            factory(Record::class)->create([
+                'user_id' => $user->id,
+                'pts' => $currentPts
+            ]);
         }
     }
 }

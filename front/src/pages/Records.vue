@@ -1,6 +1,6 @@
 <template>
   <v-container fill-height>
-    <v-row v-if="records === undefined">
+    <v-row v-if="record === undefined">
       <v-col align="center">
         <Loader />
       </v-col>
@@ -10,29 +10,15 @@
         <div>
           <div class="justify-center flex-items">
             <div class="display-4 font-weight-bold mr-2 secondary--text">
-              {{ records.max.pts | formatPts }}
+              {{ record.pts | formatPts }}
             </div>
             <span class="subtitle-1 grey--text">
               pts
             </span>
           </div>
           <div class="mt-4 caption grey--text">
-            {{ formatDate(records.max.updated_at) }}
+            {{ formatDate(record.updated_at) }}
           </div>
-        </div>
-      </div>
-      <v-divider></v-divider>
-      <div>
-        <div class="justify-center flex-items">
-          <div class="display-4 font-weight-bold mr-2 error--text">
-            {{ records.min.pts | formatPts }}
-          </div>
-          <span class="subtitle-1 grey--text">
-            pts
-          </span>
-        </div>
-        <div class="mt-4 caption grey--text">
-          {{ formatDate(records.min.updated_at) }}
         </div>
       </div>
     </div>
@@ -48,7 +34,7 @@ export default {
 
   data() {
     return {
-      records: undefined,
+      record: undefined,
     }
   },
 
@@ -58,7 +44,7 @@ export default {
 
   methods: {
     loadData() {
-      this.$http.get(apiUrl).then(r => (this.records = r.data))
+      this.$http.get(apiUrl).then(r => (this.record = r.data))
     },
 
     formatDate(date) {

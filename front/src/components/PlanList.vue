@@ -30,12 +30,9 @@
 </template>
 
 <script>
-import Pts from "@/components/Pts"
 const apiUrl = "plans"
 
 export default {
-  components: { Pts },
-
   props: {
     items: {
       required: true,

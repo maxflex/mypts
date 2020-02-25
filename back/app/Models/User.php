@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\RecordType;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
 
@@ -22,15 +21,11 @@ class User extends Authenticatable
         return $this->hasMany(Plan::class);
     }
 
-    public function maxRecord()
+    public function record()
     {
-        return $this->hasOne(Record::class)->where('type', RecordType::max);
+        return $this->hasOne(Record::class);
     }
 
-    public function minRecord()
-    {
-        return $this->hasOne(Record::class)->where('type', RecordType::min);
-    }
 
     public function getCurrentPtsAttribute()
     {
@@ -38,24 +33,17 @@ class User extends Authenticatable
         return $base + $this->entries()->sum('pts');
     }
 
-    public function updateRecords()
+    public function updateRecord()
     {
         // seeder prevent
-        if ($this->minRecord === null) {
+        if ($this->record === null) {
             return;
         }
 
         $currentPts = $this->currentPts;
 
-        if ($currentPts < $this->minRecord->pts) {
-            $this->minRecord()->update([
-                'pts' => $currentPts,
-                'updated_at' => now()
-            ]);
-        }
-
-        if ($currentPts > $this->maxRecord->pts) {
-            $this->maxRecord()->update([
+        if ($currentPts < $this->record->pts) {
+            $this->record()->update([
                 'pts' => $currentPts,
                 'updated_at' => now()
             ]);
