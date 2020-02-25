@@ -40,8 +40,9 @@ export default {
   },
 
   methods: {
-    toggle(item) {
-      this.$http.put([apiUrl, item.id].join("/"))
+    async toggle(item) {
+      await this.$http.put([apiUrl, item.id].join("/"))
+      this.$store.dispatch("menu/getUnfinishedPlansCount")
     },
   },
 }

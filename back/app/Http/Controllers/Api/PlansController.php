@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class PlansController extends Controller
 {
     protected $filters = [
-        'equals' => ['date'],
+        'equals' => ['date', 'is_finished'],
         'like' => ['comment']
     ];
 
@@ -18,6 +18,10 @@ class PlansController extends Controller
         $query = auth()->user()->plans();
 
         $this->filter($request, $query);
+
+        if ($request->has('count')) {
+            return $query->count();
+        }
 
         return $query->get();
     }
@@ -33,11 +37,13 @@ class PlansController extends Controller
         if (!$plan->is_finished) {
             auth()->user()->entries()->create([
                 'comment' => $plan->comment,
+                'desc' => $plan->desc,
                 'pts' => $plan->pts,
             ]);
         } else {
             auth()->user()->entries()
                 ->where('comment', $plan->comment)
+                ->where('desc', $plan->desc)
                 ->where('pts', $plan->pts)
                 ->whereDate('created_at', $plan->date)
                 ->delete();

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
     protected $fillable = [
-        'comment', 'pts', 'date', 'is_finished'
+        'comment', 'pts', 'date', 'is_finished', 'desc'
     ];
 
     public function scopeUnfinished($query)

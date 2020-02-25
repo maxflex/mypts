@@ -42,8 +42,8 @@
     <v-dialog v-model="dialog">
       <v-card outlined class="full-width">
         <v-card-text>
-          <v-row>
-            <v-col cols="12">
+          <div class="d-flex flex-column">
+            <div>
               <v-menu offset-y :value="autocomplete.length > 0">
                 <template v-slot:activator>
                   <v-text-field
@@ -66,11 +66,22 @@
                   </v-list-item>
                 </v-list>
               </v-menu>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field placeholder="pts" v-model="item.pts"></v-text-field>
-            </v-col>
-          </v-row>
+            </div>
+            <div>
+              <v-text-field
+                hide-details
+                placeholder="pts"
+                v-model="item.pts"
+              ></v-text-field>
+            </div>
+            <Expander>
+              <v-text-field
+                hide-details
+                v-model="item.desc"
+                placeholder="описание"
+              />
+            </Expander>
+          </div>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -95,9 +106,10 @@ const apiUrl = "plans"
 import PlanList from "@/components/PlanList"
 import Loader from "@/components/Loader"
 import { debounce } from "lodash"
+import Expander from "@/components/Expander"
 
 export default {
-  components: { PlanList, Loader },
+  components: { PlanList, Loader, Expander },
 
   data() {
     const modes = {
@@ -140,6 +152,7 @@ export default {
       }
       const params = {
         comment: this.item.comment,
+        desc: this.item.desc,
         take: 10,
       }
       this.$http.get(apiUrl, { params }).then(r => {
@@ -175,6 +188,7 @@ export default {
         .finally(() => {
           this.adding = false
           this.dialog = false
+          this.$store.dispatch("menu/getUnfinishedPlansCount")
         })
     },
   },

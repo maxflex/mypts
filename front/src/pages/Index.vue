@@ -40,8 +40,8 @@
     <v-dialog v-model="dialog">
       <v-card outlined class="full-width">
         <v-card-text>
-          <v-row>
-            <v-col cols="12">
+          <div class="d-flex flex-column">
+            <div>
               <v-menu offset-y :value="autocomplete.length > 0">
                 <template v-slot:activator>
                   <v-text-field
@@ -64,11 +64,22 @@
                   </v-list-item>
                 </v-list>
               </v-menu>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field placeholder="pts" v-model="item.pts"></v-text-field>
-            </v-col>
-          </v-row>
+            </div>
+            <div>
+              <v-text-field
+                hide-details
+                placeholder="pts"
+                v-model="item.pts"
+              ></v-text-field>
+            </div>
+            <Expander>
+              <v-text-field
+                hide-details
+                v-model="item.desc"
+                placeholder="описание"
+              />
+            </Expander>
+          </div>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -92,10 +103,11 @@
 const apiUrl = "pts"
 import Pts from "@/components/Pts"
 import Loader from "@/components/Loader"
+import Expander from "@/components/Expander"
 import { debounce } from "lodash"
 
 export default {
-  components: { Pts, Loader },
+  components: { Pts, Loader, Expander },
 
   data() {
     return {
@@ -118,6 +130,7 @@ export default {
       }
       const params = {
         comment: this.item.comment,
+        desc: this.item.desc,
         take: 10,
       }
       this.$http.get("entries", { params }).then(r => {
@@ -131,7 +144,10 @@ export default {
       this.pts = undefined
       this.$http.get(apiUrl).then(r => {
         this.pts = r.data
-        this.$nextTick(() => (this.isNewRecord = r.data.isNewRecord))
+        this.$nextTick(() => {
+          this.isNewRecord = r.data.isNewRecord
+          this.$store.commit("menu/setIsNewRecord", this.isNewRecord)
+        })
       })
     },
 

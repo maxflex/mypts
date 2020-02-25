@@ -7,7 +7,15 @@
 
     <v-btn :to="{ name: 'PagePlan' }">
       <span>План</span>
-      <v-icon>mdi-file-document-box-check</v-icon>
+      <v-badge
+        overlap
+        :content="$store.state.menu.unfinishedPlansCount"
+        color="accent"
+        bordered
+        :value="$store.state.menu.unfinishedPlansCount > 0"
+      >
+        <v-icon>mdi-calendar-check</v-icon>
+      </v-badge>
     </v-btn>
 
     <v-btn :to="{ name: 'PageHistory' }">
@@ -17,7 +25,14 @@
 
     <v-btn :to="{ name: 'PageRecords' }">
       <span>Рекорды</span>
-      <v-icon>mdi-trophy</v-icon>
+      <v-badge
+        overlap
+        dot
+        color="secondary"
+        :value="$store.state.menu.isNewRecord"
+      >
+        <v-icon>mdi-trophy</v-icon>
+      </v-badge>
     </v-btn>
   </v-bottom-navigation>
 </template>

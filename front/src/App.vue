@@ -25,6 +25,7 @@ export default {
 
   async created() {
     await this.$store.dispatch("auth/getLoggedUser")
+    this.$store.dispatch("menu/getUnfinishedPlansCount")
     this.loaded = true
   },
 

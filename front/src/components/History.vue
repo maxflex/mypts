@@ -1,24 +1,46 @@
 <template>
-  <v-simple-table>
-    <tbody>
-      <tr v-for="(item, index) in items" :key="item.id">
-        <td width="1" class="next-day-td">
-          <div v-if="isNextDay(index)" class="next-day">
-            <span>
-              {{ $moment(item.created_at).format("DD MMMM") }}
-            </span>
-          </div>
-        </td>
-        <td>
-          {{ item.comment }}
-        </td>
-
-        <td class="text-right">
-          <Pts :value="item.pts" />
-        </td>
-      </tr>
-    </tbody>
-  </v-simple-table>
+  <div>
+    <v-simple-table>
+      <tbody>
+        <tr @click="open(item)" v-for="(item, index) in items" :key="item.id">
+          <td width="1" class="next-day-td">
+            <div v-if="isNextDay(index)" class="next-day">
+              <span>
+                {{ $moment(item.created_at).format("DD MMMM") }}
+              </span>
+            </div>
+          </td>
+          <td>
+            {{ item.comment }}
+            <v-icon small color="grey" v-if="item.desc">
+              mdi-information-outline
+            </v-icon>
+          </td>
+          <td class="text-right">
+            <Pts :value="item.pts" />
+          </td>
+        </tr>
+      </tbody>
+    </v-simple-table>
+    <v-dialog v-model="dialog">
+      <v-card outlined>
+        <v-card-title class="justify-center">
+          <Pts class="headline" :value="dialogItem.pts" />
+        </v-card-title>
+        <v-card-text>
+          <p class="body-1">
+            {{ dialogItem.comment }}
+          </p>
+          <p v-if="dialogItem.desc" class="body-2 grey--text">
+            {{ dialogItem.desc }}
+          </p>
+          <span class="caption grey--text">
+            {{ formatDate(dialogItem.created_at) }}
+          </span>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -29,6 +51,13 @@ export default {
     items: {
       required: true,
     },
+  },
+
+  data() {
+    return {
+      dialogItem: {},
+      dialog: false,
+    }
   },
 
   components: { Pts },
@@ -44,6 +73,15 @@ export default {
 
     getDate(index) {
       return this.$moment(this.items[index].created_at).format("YYYY-MM-DD")
+    },
+
+    formatDate(date) {
+      return this.$moment(date).format("DD.MM.YY в HH:mm")
+    },
+
+    open(item) {
+      this.dialogItem = item
+      this.dialog = true
     },
   },
 }
