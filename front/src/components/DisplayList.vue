@@ -5,7 +5,7 @@
       <NoData v-else />
     </div>
     <InfiniteLoading
-      spinner="waveDots"
+      spinner="spiral"
       @infinite="infiniteHandler"
       ref="InfiniteLoading"
     >

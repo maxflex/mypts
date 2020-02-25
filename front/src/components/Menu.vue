@@ -15,9 +15,9 @@
       <v-icon>mdi-history</v-icon>
     </v-btn>
 
-    <v-btn :to="{ name: 'PageAdd' }">
-      <span>Добавить</span>
-      <v-icon>mdi-plus</v-icon>
+    <v-btn :to="{ name: 'PageRecords' }">
+      <span>Рекорды</span>
+      <v-icon>mdi-trophy</v-icon>
     </v-btn>
   </v-bottom-navigation>
 </template>

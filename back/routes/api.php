@@ -6,6 +6,7 @@ Route::namespace('Api')->group(function () {
         Route::get('auth', 'AuthController@getUser');
         Route::get('pts', 'PtsController@index');
         Route::get('entries/autocomplete', 'EntriesController@autocomplete');
+        Route::get('records', 'RecordsController@index');
         Route::apiResources([
             'entries' => 'EntriesController',
             'plans' => 'PlansController',
