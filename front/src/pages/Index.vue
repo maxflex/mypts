@@ -7,7 +7,15 @@
       <v-col align="center">
         <Loader v-if="pts === undefined" />
         <div v-else>
-          <div class="justify-center flex-items">
+          <div class="justify-center flex-items relative">
+            <v-scale-transition>
+              <div v-if="isNewRecord" class="new-record">
+                <v-chip color="success" small>
+                  <v-icon small class="mr-1">mdi-trophy</v-icon>
+                  новый рекорд
+                </v-chip>
+              </div>
+            </v-scale-transition>
             <div class="display-4 font-weight-bold mr-2 accent--text">
               {{ pts.currentPts | formatPts }}
             </div>
@@ -96,6 +104,7 @@ export default {
       item: {},
       autocomplete: [],
       adding: false,
+      isNewRecord: false,
     }
   },
 
@@ -119,7 +128,10 @@ export default {
   methods: {
     loadData() {
       this.pts = undefined
-      this.$http.get(apiUrl).then(r => (this.pts = r.data))
+      this.$http.get(apiUrl).then(r => {
+        this.pts = r.data
+        this.$nextTick(() => (this.isNewRecord = r.data.isNewRecord))
+      })
     },
 
     selectAutocomplete(item) {
@@ -147,5 +159,13 @@ export default {
   position: absolute !important;
   right: 12px;
   top: 12px;
+}
+
+.new-record {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  left: 0;
+  top: -40px;
 }
 </style>

@@ -42,7 +42,7 @@ class User extends Authenticatable
 
         $currentPts = $this->currentPts;
 
-        if ($currentPts < $this->record->pts) {
+        if ($currentPts > $this->record->pts) {
             $this->record()->update([
                 'pts' => $currentPts,
                 'updated_at' => now()
