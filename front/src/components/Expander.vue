@@ -1,7 +1,7 @@
 <template>
   <div>
     <a
-      class="caption d-block pt-3"
+      class="caption d-block pt-4"
       v-if="!isExpanded"
       @click="isExpanded = true"
     >

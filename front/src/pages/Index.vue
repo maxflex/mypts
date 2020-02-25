@@ -73,8 +73,9 @@
               ></v-text-field>
             </div>
             <Expander>
-              <v-text-field
+              <v-textarea
                 hide-details
+                rows="3"
                 v-model="item.desc"
                 placeholder="описание"
               />
