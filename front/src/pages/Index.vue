@@ -132,7 +132,7 @@ export default {
       this.adding = true
       this.$http
         .post("entries", this.item)
-        .then(r => this.loadData())
+        .then(() => this.loadData())
         .finally(() => {
           this.adding = false
           this.dialog = false
