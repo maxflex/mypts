@@ -45,7 +45,7 @@ class UnfinishedPlansPenalty extends Command
             ->unfinished()
             ->get()
             ->each(fn ($plan) => Entry::create([
-                'pts' => $plan->pts * -1,
+                'pts' => $plan->pts * -2,
                 'comment' => $plan->comment,
                 'user_id' => $plan->user_id,
                 'created_at' => Carbon::yesterday()->format('Y-m-d 23:59:59')
