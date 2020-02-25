@@ -4,7 +4,7 @@
       class="flex-items justify-space-between full-width pa-3 plans-controls"
     >
       <div style="flex: 1"></div>
-      <div style="flex: 1; white-space: nowrap">
+      <div style="flex: 1; white-space: nowrap; text-align: center">
         <v-chip
           :pill="mode === modes.today"
           :outlined="mode !== modes.today"
