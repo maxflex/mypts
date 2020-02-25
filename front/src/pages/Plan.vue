@@ -93,12 +93,11 @@
 <script>
 const apiUrl = "plans"
 import PlanList from "@/components/PlanList"
-import Pts from "@/components/Pts"
 import Loader from "@/components/Loader"
 import { debounce } from "lodash"
 
 export default {
-  components: { PlanList, Pts, Loader },
+  components: { PlanList, Loader },
 
   data() {
     const modes = {
