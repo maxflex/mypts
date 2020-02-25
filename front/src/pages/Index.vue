@@ -166,6 +166,7 @@ export default {
         .finally(() => {
           this.adding = false
           this.dialog = false
+          this.item = {}
         })
     },
   },
