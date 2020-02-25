@@ -16,6 +16,11 @@ class User extends Authenticatable
         return $this->hasMany(Entry::class);
     }
 
+    public function plans()
+    {
+        return $this->hasMany(Plan::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

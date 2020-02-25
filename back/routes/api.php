@@ -8,6 +8,7 @@ Route::namespace('Api')->group(function () {
         Route::get('entries/autocomplete', 'EntriesController@autocomplete');
         Route::apiResources([
             'entries' => 'EntriesController',
+            'plans' => 'PlansController',
         ]);
     });
 });
