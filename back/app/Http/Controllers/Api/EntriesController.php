@@ -9,10 +9,15 @@ use Illuminate\Http\Request;
 
 class EntriesController extends Controller
 {
+    protected $filters = [
+        'like' => ['comment']
+    ];
+
     public function index(Request $request)
     {
         $query = auth()->user()->entries()->latest();
 
+        $this->filter($request, $query);
 
         return $this->handleIndexRequest($request, $query, EntryResource::class);
     }
@@ -23,17 +28,5 @@ class EntriesController extends Controller
             $request->all()
         );
         return $action;
-    }
-
-    public function autocomplete(Request $request)
-    {
-        $request->validate([
-            'comment' => ['required', 'min:3']
-        ]);
-
-        return auth()->user()->entries()->latest()
-            ->where('comment', 'like', "%{$request->comment}%")
-            ->take(10)
-            ->get();
     }
 }

@@ -9,15 +9,12 @@ use Illuminate\Http\Request;
 class PlansController extends Controller
 {
     protected $filters = [
-        'equals' => ['date']
+        'equals' => ['date'],
+        'like' => ['comment']
     ];
 
     public function index(Request $request)
     {
-        $request->validate([
-            'date' => ['required', 'date_format:Y-m-d']
-        ]);
-
         $query = auth()->user()->plans();
 
         $this->filter($request, $query);

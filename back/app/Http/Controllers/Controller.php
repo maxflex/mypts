@@ -37,6 +37,10 @@ class Controller extends BaseController
             $query->orderByRaw($sortField . ' ' . $sortOrder);
         }
 
+        if ($request->has('take')) {
+            $query->take($request->take);
+        }
+
         $filters = $filters ?? $this->filters;
         foreach ($filters as $type => $fields) {
             foreach ($fields as $key_field => $field) {
@@ -164,7 +168,6 @@ class Controller extends BaseController
     {
         $query->whereRaw("FIND_IN_SET({$value}, {$field})");
     }
-
 
     protected function filterFindInSetMultiple(string $field, $values, &$query)
     {

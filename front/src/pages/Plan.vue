@@ -61,7 +61,7 @@
                   >
                     <div class="flex-items">
                       <span class="mr-2">{{ item.comment }}</span>
-                      <Pts :value="item.pts" />
+                      <span class="font-weight-bold">{{ item.pts }}</span>
                     </div>
                   </v-list-item>
                 </v-list>
@@ -141,8 +141,9 @@ export default {
       }
       const params = {
         comment: this.item.comment,
+        take: 10,
       }
-      this.$http.get("entries/autocomplete", { params }).then(r => {
+      this.$http.get(apiUrl, { params }).then(r => {
         this.autocomplete = r.data
       })
     }, 300)

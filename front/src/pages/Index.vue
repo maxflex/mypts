@@ -118,9 +118,10 @@ export default {
       }
       const params = {
         comment: this.item.comment,
+        take: 10,
       }
-      this.$http.get("entries/autocomplete", { params }).then(r => {
-        this.autocomplete = r.data
+      this.$http.get("entries", { params }).then(r => {
+        this.autocomplete = r.data.data
       })
     }, 300)
   },
