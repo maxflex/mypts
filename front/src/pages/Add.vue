@@ -1,51 +1,52 @@
 <template>
-  <v-card outlined class="full-width">
-    <v-card-text>
-      <v-row>
-        <v-col cols="12">
-          <v-menu offset-y :value="items.length > 0">
-            <template v-slot:activator>
-              <v-text-field
-                hide-details
-                v-model="item.comment"
-                placeholder="комментарий"
-                @keydown="search"
-              />
-            </template>
-            <v-list dense>
-              <v-list-item
-                @click="selectAutocomplete(item)"
-                v-for="item in items"
-                :key="item.id"
-              >
-                <div class="flex-items">
-                  <span class="mr-2">{{ item.comment }}</span>
-                  <Pts :value="item.pts" />
-                </div>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </v-col>
-        <v-col cols="12">
-          <v-text-field placeholder="pts" v-model="item.pts"></v-text-field>
-        </v-col>
-      </v-row>
-    </v-card-text>
-    <v-card-actions>
-      <v-spacer />
-      <v-btn
-        rounded
-        large
-        class="px-5"
-        color="accent"
-        :loading="adding"
-        @click="add"
-      >
-        Добавить
-      </v-btn>
-      <v-spacer />
-    </v-card-actions>
-  </v-card>
+  <v-container fill-height fluid>
+    <v-card outlined class="full-width">
+      <v-card-text>
+        <v-row>
+          <v-col cols="12">
+            <v-menu offset-y :value="items.length > 0">
+              <template v-slot:activator>
+                <v-text-field
+                  hide-details
+                  v-model="item.comment"
+                  placeholder="комментарий"
+                  @keydown="search"
+                />
+              </template>
+              <v-list dense>
+                <v-list-item
+                  @click="selectAutocomplete(item)"
+                  v-for="item in items"
+                  :key="item.id"
+                >
+                  <div class="flex-items">
+                    <span class="mr-2">{{ item.comment }}</span>
+                    <Pts :value="item.pts" />
+                  </div>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </v-col>
+          <v-col cols="12">
+            <v-text-field placeholder="pts" v-model="item.pts"></v-text-field>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn
+          depressed
+          class="px-5"
+          color="accent"
+          :loading="adding"
+          @click="add"
+        >
+          Добавить
+        </v-btn>
+        <v-spacer />
+      </v-card-actions>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -58,10 +59,7 @@ export default {
 
   data() {
     return {
-      item: {
-        name: null,
-        pts: null,
-      },
+      item: {},
       items: [],
       isLoading: false,
       adding: false,
@@ -89,7 +87,8 @@ export default {
 
   methods: {
     selectAutocomplete(item) {
-      this.item = item
+      this.item.comment = item.comment
+      this.item.pts = item.pts
       this.items = []
     },
 

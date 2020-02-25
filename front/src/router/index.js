@@ -3,6 +3,7 @@ import VueRouter from "vue-router"
 import PageIndex from "@/pages/Index"
 import PageAdd from "@/pages/Add"
 import PageHistory from "@/pages/History"
+import PagePlan from "@/pages/Plan"
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: "/history",
     name: "PageHistory",
     component: PageHistory,
+  },
+  {
+    path: "/plan",
+    name: "PagePlan",
+    component: PagePlan,
   },
 ]
 

@@ -1,8 +1,6 @@
 <template>
   <v-content>
-    <v-container fill-height fluid>
-      <router-view></router-view>
-    </v-container>
+    <router-view></router-view>
     <Menu />
     <v-snackbar
       v-model="$store.state.snackBar.show"
