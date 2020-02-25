@@ -32,7 +32,13 @@ class PlansController extends Controller
         return $plan;
     }
 
-    public function update(Plan $plan)
+    public function update(Plan $plan, Request $request)
+    {
+        $plan->update($request->all());
+        return $plan;
+    }
+
+    public function toggle(Plan $plan)
     {
         if (!$plan->is_finished) {
             auth()->user()->entries()->create([

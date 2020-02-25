@@ -23,7 +23,7 @@
         >
       </div>
       <div style="flex: 1" class="text-right">
-        <v-btn icon color="accent" @click="dialog = true">
+        <v-btn icon color="accent" @click="addDialog()">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </div>
@@ -32,7 +32,12 @@
       <div v-if="loading" class="align-self-center full-width text-center">
         <Loader />
       </div>
-      <PlanList class="mt-2" v-else-if="items.length > 0" :items="items" />
+      <PlanList
+        @open="open"
+        class="mt-2"
+        v-else-if="items.length > 0"
+        :items="items"
+      />
       <div class="grey--text align-self-center full-width text-center" v-else>
         <div>
           на {{ mode === modes.today ? "сегодня" : "завтра" }} планов нет
@@ -91,9 +96,9 @@
             class="px-5"
             color="accent"
             :loading="adding"
-            @click="add"
+            @click="storeOrUpdate"
           >
-            Добавить
+            {{ item.id ? "Редактировать" : "Добавить" }}
           </v-btn>
           <v-spacer />
         </v-card-actions>
@@ -106,7 +111,7 @@
 const apiUrl = "plans"
 import PlanList from "@/components/PlanList"
 import Loader from "@/components/Loader"
-import { debounce } from "lodash"
+import { debounce, cloneDeep } from "lodash"
 import Expander from "@/components/Expander"
 
 export default {
@@ -180,18 +185,40 @@ export default {
       this.autocomplete = []
     },
 
-    add() {
-      this.item.date = this.date
+    addDialog() {
+      this.item = {}
+      this.dialog = true
+    },
+
+    async storeOrUpdate() {
       this.adding = true
-      this.$http
-        .post(apiUrl, this.item)
-        .then(r => this.items.unshift(r.data))
-        .finally(() => {
-          this.adding = false
-          this.dialog = false
-          this.item = {}
-          this.$store.dispatch("menu/getUnfinishedPlansCount")
-        })
+      if (this.item.id) {
+        await this.$http
+          .put([apiUrl, this.item.id].join("/"), this.item)
+          .then(r => {
+            this.items.splice()
+            this.items.splice(
+              this.items.findIndex(e => e.id === this.item.id),
+              1,
+              r.data,
+            )
+          })
+      } else {
+        this.item.date = this.date
+        await this.$http
+          .post(apiUrl, this.item)
+          .then(r => this.items.unshift(r.data))
+          .finally(() => {
+            this.$store.dispatch("menu/getUnfinishedPlansCount")
+          })
+      }
+      this.adding = false
+      this.dialog = false
+    },
+
+    open(item) {
+      this.item = cloneDeep(item)
+      this.dialog = true
     },
   },
 }

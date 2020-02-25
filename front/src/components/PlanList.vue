@@ -6,7 +6,7 @@
         :key="item.id"
         :class="{ 'plans-table_finished': item.is_finished }"
       >
-        <td>
+        <td @click="$emit('open', item)">
           <span class="plans-table__plan-comment">
             {{ item.comment }}
           </span>
@@ -41,7 +41,7 @@ export default {
 
   methods: {
     async toggle(item) {
-      await this.$http.put([apiUrl, item.id].join("/"))
+      await this.$http.put([apiUrl, "toggle", item.id].join("/"))
       this.$store.dispatch("menu/getUnfinishedPlansCount")
     },
   },
