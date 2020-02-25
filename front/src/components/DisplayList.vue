@@ -11,6 +11,9 @@
     >
       <div slot="no-more"></div>
       <div slot="no-results"></div>
+      <div slot="spinner">
+        <Loader />
+      </div>
     </InfiniteLoading>
   </div>
 </template>
@@ -18,6 +21,7 @@
 <script>
 import InfiniteLoading from "vue-infinite-loading"
 import NoData from "@/components/NoData"
+import Loader from "@/components/Loader"
 
 export default {
   props: {
@@ -32,7 +36,7 @@ export default {
     },
   },
 
-  components: { InfiniteLoading, NoData },
+  components: { InfiniteLoading, NoData, Loader },
 
   data() {
     return {
