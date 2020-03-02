@@ -31,3 +31,14 @@
 .low-opacity {
   opacity: 0.25;
 }
+
+.btn-top {
+  position: absolute !important;
+  top: 12px;
+  &_right {
+    right: 12px;
+  }
+  &_left {
+    left: 12px;
+  }
+}

@@ -1,5 +1,13 @@
 <template>
   <v-container fill-height>
+    <v-btn
+      @click="$router.back()"
+      class="btn-top btn-top_left"
+      icon
+      color="grey"
+    >
+      <v-icon>mdi-arrow-left</v-icon>
+    </v-btn>
     <v-row v-if="record === undefined">
       <v-col align="center">
         <Loader />

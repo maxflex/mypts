@@ -23,16 +23,9 @@
       <v-icon>mdi-history</v-icon>
     </v-btn>
 
-    <v-btn :to="{ name: 'PageRecords' }">
-      <span>Рекорды</span>
-      <v-badge
-        overlap
-        dot
-        color="secondary"
-        :value="$store.state.menu.isNewRecord"
-      >
-        <v-icon>mdi-trophy</v-icon>
-      </v-badge>
+    <v-btn :to="{ name: 'PageRules' }">
+      <span>Правила</span>
+      <v-icon>mdi-file-document-box</v-icon>
     </v-btn>
   </v-bottom-navigation>
 </template>

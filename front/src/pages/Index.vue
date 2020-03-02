@@ -1,6 +1,19 @@
 <template>
   <v-container fill-height>
-    <v-btn class="add-btn" icon color="accent" @click="dialog = true">
+    <v-btn
+      :to="{ name: 'PageRecords' }"
+      class="btn-top btn-top_left"
+      icon
+      color="accent"
+    >
+      <v-icon>mdi-trophy</v-icon>
+    </v-btn>
+    <v-btn
+      class="btn-top btn-top_right"
+      icon
+      color="accent"
+      @click="dialog = true"
+    >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
     <v-row>
@@ -174,12 +187,6 @@ export default {
 </script>
 
 <style lang="scss">
-.add-btn {
-  position: absolute !important;
-  right: 12px;
-  top: 12px;
-}
-
 .new-record {
   position: absolute;
   width: 100%;
