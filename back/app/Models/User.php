@@ -21,6 +21,11 @@ class User extends Authenticatable
         return $this->hasMany(Plan::class);
     }
 
+    public function rules()
+    {
+        return $this->hasMany(Rule::class);
+    }
+
     public function record()
     {
         return $this->hasOne(Record::class);
