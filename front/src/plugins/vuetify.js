@@ -2,10 +2,16 @@ import Vue from "vue"
 import Vuetify from "vuetify"
 import "vuetify/dist/vuetify.min.css"
 import colors from "vuetify/lib/util/colors"
+// Translation provided by Vuetify (typescript)
+import ru from "vuetify/src/locale/ru.ts"
 
 Vue.use(Vuetify)
 
 const opts = {
+  lang: {
+    locales: { ru },
+    current: "ru",
+  },
   theme: {
     dark: false,
     themes: {

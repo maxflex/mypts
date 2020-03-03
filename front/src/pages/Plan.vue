@@ -3,21 +3,36 @@
     <div
       class="flex-items justify-space-between full-width pa-3 plans-controls"
     >
-      <div style="flex: 1"></div>
+      <div style="flex: 1">
+        <v-menu>
+          <template v-slot:activator="{ on }">
+            <v-btn icon color="accent" v-on="on">
+              <v-icon>
+                mdi-calendar-blank
+              </v-icon>
+            </v-btn>
+          </template>
+          <v-date-picker no-title v-model="date"> </v-date-picker>
+        </v-menu>
+      </div>
       <div style="flex: 1; white-space: nowrap; text-align: center">
         <v-chip
-          :pill="mode === modes.today"
-          :outlined="mode !== modes.today"
+          :pill="isToday"
+          :outlined="!isToday"
           class="mx-2"
-          @click="mode = modes.today"
-          :class="{ accent: mode === modes.today }"
+          @click="date = $moment().format('YYYY-MM-DD')"
+          :class="{ accent: isToday }"
           >сегодня</v-chip
         >
         <v-chip
-          :pill="mode === modes.tomorrow"
-          :outlined="mode !== modes.tomorrow"
-          @click="mode = modes.tomorrow"
-          :class="{ accent: mode === modes.tomorrow }"
+          :pill="isTomorrow"
+          :outlined="!isTomorrow"
+          @click="
+            date = $moment()
+              .add(1, 'day')
+              .format('YYYY-MM-DD')
+          "
+          :class="{ accent: isTomorrow }"
           class="mx-2"
           >завтра</v-chip
         >
@@ -40,7 +55,11 @@
       />
       <div class="grey--text align-self-center full-width text-center" v-else>
         <div>
-          на {{ mode === modes.today ? "сегодня" : "завтра" }} планов нет
+          на
+          <span v-if="isToday">сегодня</span>
+          <span v-else-if="isTomorrow">завтра</span>
+          <span v-else>{{ $moment(date).format("DD MMMM") }}</span>
+          планов нет
         </div>
       </div>
     </div>
@@ -118,14 +137,8 @@ export default {
   components: { PlanList, Loader, Expander },
 
   data() {
-    const modes = {
-      today: "today",
-      tomorrow: "tomorrow",
-    }
     return {
       apiUrl,
-      modes,
-      mode: modes.today,
       items: [],
       date: this.$moment().format("YYYY-MM-DD"),
       dialog: false,
@@ -137,13 +150,13 @@ export default {
   },
 
   watch: {
-    mode(newVal) {
-      this.date =
-        newVal === this.modes.today
-          ? this.$moment().format("YYYY-MM-DD")
-          : this.$moment()
-              .add(1, "day")
-              .format("YYYY-MM-DD")
+    date() {
+      // this.date =
+      //   newVal === this.modes.today
+      //     ? this.$moment().format("YYYY-MM-DD")
+      //     : this.$moment()
+      //         .add(1, "day")
+      //         .format("YYYY-MM-DD")
       this.loadData()
     },
   },
@@ -219,6 +232,20 @@ export default {
     open(item) {
       this.item = cloneDeep(item)
       this.dialog = true
+    },
+  },
+
+  computed: {
+    isToday() {
+      return this.date === this.$moment().format("YYYY-MM-DD")
+    },
+    isTomorrow() {
+      return (
+        this.date ===
+        this.$moment()
+          .add(1, "day")
+          .format("YYYY-MM-DD")
+      )
     },
   },
 }
