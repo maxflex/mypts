@@ -24,8 +24,22 @@
     </v-simple-table>
     <v-dialog v-model="dialog">
       <v-card outlined>
-        <v-card-title class="justify-center">
-          <Pts class="headline" :value="dialogItem.pts" />
+        <v-card-title class="justify-center mb-2">
+          <Pts
+            class="headline font-weight-bold full-width text-center"
+            :value="dialogItem.pts"
+          />
+          <div class="subtitle-2 grey--text">
+            <span>{{ dialogItem.new_pts - dialogItem.pts }}</span>
+            <span
+              :class="{
+                'secondary--text': dialogItem.pts > 0,
+                'error--text': dialogItem.pts < 0,
+              }"
+            >
+              → {{ dialogItem.new_pts }}
+            </span>
+          </div>
         </v-card-title>
         <v-card-text>
           <p class="body-1">
