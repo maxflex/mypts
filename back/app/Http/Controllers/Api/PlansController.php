@@ -38,6 +38,11 @@ class PlansController extends Controller
         return $plan;
     }
 
+    public function destroy(Plan $plan)
+    {
+        $plan->delete();
+    }
+
     public function toggle(Plan $plan)
     {
         if (!$plan->is_finished) {

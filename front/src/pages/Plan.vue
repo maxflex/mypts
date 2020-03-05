@@ -12,7 +12,7 @@
               </v-icon>
             </v-btn>
           </template>
-          <v-date-picker no-title v-model="date" :first-day-of-week="1" />
+          <v-date-picker no-title v-model="date"> </v-date-picker>
         </v-menu>
       </div>
       <div style="flex: 1; white-space: nowrap; text-align: center">

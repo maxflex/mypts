@@ -93,7 +93,7 @@
     <v-dialog v-model="applyDialog">
       <v-card outlined>
         <v-card-title class="justify-center">
-          <Pts class="headline font-weight-bold" :value="dialogItem.pts" />
+          <Pts class="headline" :value="dialogItem.pts" />
         </v-card-title>
         <v-card-text>
           <p class="body-1">
