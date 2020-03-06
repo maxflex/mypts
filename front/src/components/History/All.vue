@@ -47,6 +47,8 @@
 import Pts from "@/components/Pts"
 
 export default {
+  name: "all",
+
   props: {
     items: {
       required: true,

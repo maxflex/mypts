@@ -1,7 +1,9 @@
 <template>
   <span
-    class="font-weight-medium"
+    v-show="value != 0"
+    class=""
     :class="{
+      'font-weight-medium': !light,
       'grey--text': value === 0,
       'secondary--text': value > 0,
       'error--text': value < 0,
@@ -17,6 +19,7 @@ export default {
     value: {
       required: true,
     },
+    light: Boolean,
   },
 }
 </script>

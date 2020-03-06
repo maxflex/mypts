@@ -1,8 +1,13 @@
 <template>
-  <div :class="{ invisible: items === undefined }">
+  <div class="fill-height">
     <div v-if="items !== undefined">
       <slot name="items" :items="items" v-if="items.length > 0"></slot>
-      <NoData v-else />
+    </div>
+    <div
+      v-if="items === undefined"
+      class="d-flex fill-height align-center justify-center"
+    >
+      <Loader />
     </div>
     <InfiniteLoading
       spinner="spiral"
@@ -11,16 +16,12 @@
     >
       <div slot="no-more"></div>
       <div slot="no-results"></div>
-      <div slot="spinner">
-        <Loader />
-      </div>
     </InfiniteLoading>
   </div>
 </template>
 
 <script>
 import InfiniteLoading from "vue-infinite-loading"
-import NoData from "@/components/NoData"
 import Loader from "@/components/Loader"
 
 export default {
@@ -36,7 +37,7 @@ export default {
     },
   },
 
-  components: { InfiniteLoading, NoData, Loader },
+  components: { InfiniteLoading, Loader },
 
   data() {
     return {

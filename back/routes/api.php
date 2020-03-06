@@ -8,6 +8,7 @@ Route::namespace('Api')->group(function () {
         Route::apiResource('records', 'RecordsController')->only(['index']);
         Route::put('plans/toggle/{plan}', 'PlansController@toggle');
         Route::post('rules/apply/{rule}', 'RulesController@apply');
+        Route::get('history', 'HistoryController@index');
         Route::apiResources([
             'entries' => 'EntriesController',
             'plans' => 'PlansController',
