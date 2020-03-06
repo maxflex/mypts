@@ -12,7 +12,7 @@
           <Pts :value="item.pts_plus_total" light />
         </td>
         <td class="text-right">
-          <Pts :value="item.pts_total" />
+          <Pts :value="item.pts_total" bold />
         </td>
       </tr>
     </tbody>

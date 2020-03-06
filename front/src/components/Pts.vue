@@ -3,7 +3,8 @@
     v-show="value != 0"
     class=""
     :class="{
-      'font-weight-medium': !light,
+      'font-weight-medium': !bold && !light,
+      'font-weight-bold': bold,
       'grey--text': value === 0,
       'secondary--text': value > 0,
       'error--text': value < 0,
@@ -20,6 +21,7 @@ export default {
       required: true,
     },
     light: Boolean,
+    bold: Boolean,
   },
 }
 </script>

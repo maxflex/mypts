@@ -3,26 +3,23 @@
     <div v-if="items !== undefined">
       <slot name="items" :items="items" v-if="items.length > 0"></slot>
     </div>
-    <div
-      v-if="items === undefined"
-      class="d-flex fill-height align-center justify-center"
-    >
-      <Loader />
-    </div>
+    <FullscreenLoader v-else />
     <InfiniteLoading
+      :class="{ invinsible: items === undefined }"
       spinner="spiral"
       @infinite="infiniteHandler"
       ref="InfiniteLoading"
     >
       <div slot="no-more"></div>
       <div slot="no-results"></div>
+      <div slot="spinner"></div>
     </InfiniteLoading>
   </div>
 </template>
 
 <script>
 import InfiniteLoading from "vue-infinite-loading"
-import Loader from "@/components/Loader"
+import FullscreenLoader from "@/components/FullscreenLoader"
 
 export default {
   props: {
@@ -37,7 +34,7 @@ export default {
     },
   },
 
-  components: { InfiniteLoading, Loader },
+  components: { InfiniteLoading, FullscreenLoader },
 
   data() {
     return {
