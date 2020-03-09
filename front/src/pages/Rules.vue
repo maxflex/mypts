@@ -15,6 +15,15 @@
           минус
         </v-chip>
         <v-chip
+          :pill="mode === modes.food"
+          :outlined="mode !== modes.food"
+          class="mx-2"
+          @click="mode = modes.food"
+          :class="{ accent: mode === modes.food }"
+        >
+          еда
+        </v-chip>
+        <v-chip
           :pill="mode === modes.plus"
           :outlined="mode !== modes.plus"
           @click="mode = modes.plus"
@@ -73,6 +82,13 @@
               v-model="item.desc"
               placeholder="описание"
             />
+            <div>
+              <v-checkbox
+                color="accent"
+                v-model="item.is_food"
+                label="Еда"
+              ></v-checkbox>
+            </div>
           </div>
         </v-card-text>
         <v-card-actions>
@@ -94,6 +110,20 @@
       <v-card outlined>
         <v-card-title class="justify-center">
           <Pts class="headline" :value="dialogItem.pts" />
+          <v-btn
+            style="position: absolute; right: 4px; top: 4px"
+            x-small
+            icon
+            @click="
+              applyDialog = false
+              open(dialogItem)
+            "
+            color="accent"
+          >
+            <v-icon>
+              mdi-pencil
+            </v-icon>
+          </v-btn>
         </v-card-title>
         <v-card-text>
           <p class="body-1">
@@ -134,6 +164,7 @@ export default {
     const modes = {
       minus: "minus",
       plus: "plus",
+      food: "food",
     }
     return {
       apiUrl,
@@ -219,10 +250,12 @@ export default {
   computed: {
     currentItems() {
       let items = this.items.filter(e => {
-        if (this.mode === this.modes.plus) {
-          return e.pts >= 0
+        if (this.mode === this.modes.food) {
+          return e.is_food
+        } else if (this.mode === this.modes.plus) {
+          return e.pts >= 0 && !e.is_food
         }
-        return e.pts < 0
+        return e.pts < 0 && !e.is_food
       })
       items = sortBy(items, "pts")
       return this.mode === this.modes.plus ? items : items.reverse()
