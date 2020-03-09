@@ -13,3 +13,5 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => '$2y$10$DCqwX3z/vnElFLh7cXaP/.V.tGQyTTPFnHvM6lw9j.yXP7.JnLese', // password
     ];
 });
+
+$factory->afterCreating(User::class, fn ($user) => $user->record()->create());

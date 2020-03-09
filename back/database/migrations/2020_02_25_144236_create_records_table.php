@@ -17,8 +17,8 @@ class CreateRecordsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('pts');
-            $table->datetime('updated_at');
+            $table->integer('pts')->default(0);
+            $table->datetime('updated_at')->useCurrent();;
         });
     }
 

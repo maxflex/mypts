@@ -14,9 +14,9 @@ class AddNewPtsToEntries extends Migration
     public function up()
     {
         Schema::table('entries', function (Blueprint $table) {
-            $table->integer('new_pts');
+            $table->integer('new_pts')->nullable();
         });
-        // DB::table('entries')->orderBy('id', 'asc')->get()->each(fn ($entry) => DB::table('entries')->whereId($entry->id)->update(['new_pts' => $entry->pts + 1200 + DB::table('entries')->where('id', '<', $entry->id)->sum('pts')]));
+        // DB::table('entries')->orderBy('id', 'asc')->get()->each(fn ($entry) => DB::table('entries')->whereId($entry->id)->update(['new_pts' => $entry->pts + config('pts.base') + DB::table('entries')->where('id', '<', $entry->id)->sum('pts')]));
     }
 
     /**

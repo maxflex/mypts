@@ -34,17 +34,11 @@ class User extends Authenticatable
 
     public function getCurrentPtsAttribute()
     {
-        $base = 1200;
-        return $base + $this->entries()->sum('pts');
+        return config('pts.base') + $this->entries()->sum('pts');
     }
 
     public function updateRecord()
     {
-        // seeder prevent
-        if ($this->record === null) {
-            return;
-        }
-
         $currentPts = $this->currentPts;
 
         if ($currentPts > $this->record->pts) {

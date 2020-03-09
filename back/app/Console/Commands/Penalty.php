@@ -61,9 +61,10 @@ class Penalty extends Command
                 $latestPlanDate = $user->plans()->where('date', '<', Carbon::yesterday())->value('date');
                 $daysWithoutPlanInRow = Carbon::yesterday()->diffInDays($latestPlanDate);
                 $user->entries()->create([
-                    'pts' => $daysWithoutPlanInRow * -5,
+                    'pts' => $daysWithoutPlanInRow * config('pts.no-plans-coeff'),
                     'comment' => 'Отсутствие планов на день',
-                    'desc' => $daysWithoutPlanInRow > 1 ? " {$daysWithoutPlanInRow} день подряд" : null
+                    'desc' => $daysWithoutPlanInRow > 1 ? " {$daysWithoutPlanInRow} день подряд" : null,
+                    'created_at' => Carbon::yesterday()->endOfDay(),
                 ]);
             }
         }
@@ -80,11 +81,11 @@ class Penalty extends Command
             ->unfinished()
             ->get()
             ->each(fn ($plan) => Entry::create([
-                'pts' => $plan->pts * -2,
+                'pts' => $plan->pts * (int) config('pts.unfinished-plans-coeff'),
                 'comment' => $plan->comment,
                 'desc' => 'Невыполнение плана на день',
                 'user_id' => $plan->user_id,
-                'created_at' => Carbon::yesterday()->format('Y-m-d 23:59:59')
+                'created_at' => Carbon::yesterday()->endOfDay()
             ]));
     }
 }

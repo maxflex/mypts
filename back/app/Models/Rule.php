@@ -8,6 +8,6 @@ class Rule extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'comment', 'pts', 'desc'
+        'comment', 'pts', 'desc', 'is_food'
     ];
 }
