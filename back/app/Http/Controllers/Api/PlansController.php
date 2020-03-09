@@ -45,22 +45,10 @@ class PlansController extends Controller
 
     public function toggle(Plan $plan)
     {
-        if (!$plan->is_finished) {
-            auth()->user()->entries()->create([
-                'comment' => $plan->comment,
-                'desc' => $plan->desc,
-                'pts' => $plan->pts,
-            ]);
+        if ($plan->is_finished) {
+            $plan->uncomplete();
         } else {
-            auth()->user()->entries()
-                ->where('comment', $plan->comment)
-                ->where('desc', $plan->desc)
-                ->where('pts', $plan->pts)
-                ->whereDate('created_at', $plan->date)
-                ->delete();
+            $plan->complete();
         }
-        $plan->update([
-            'is_finished' => !$plan->is_finished
-        ]);
     }
 }
