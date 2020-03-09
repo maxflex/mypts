@@ -6,10 +6,10 @@
           {{ $moment(item.date).format("DD.MM") }}
         </td>
         <td class="text-right">
-          <Pts :value="item.pts_minus_total" light />
+          <Pts :value="item.pts_minus_total" light hide-zero />
         </td>
         <td class="text-right">
-          <Pts :value="item.pts_plus_total" light />
+          <Pts :value="item.pts_plus_total" light hide-zero />
         </td>
         <td class="text-right">
           <Pts :value="item.pts_total" bold />

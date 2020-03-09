@@ -1,7 +1,6 @@
 <template>
   <span
-    v-show="value != 0"
-    class=""
+    v-show="!hideZero || value != 0"
     :class="{
       'font-weight-medium': !bold && !light,
       'font-weight-bold': bold,
@@ -20,6 +19,7 @@ export default {
     value: {
       required: true,
     },
+    hideZero: Boolean,
     light: Boolean,
     bold: Boolean,
   },
