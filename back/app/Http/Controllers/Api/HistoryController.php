@@ -21,7 +21,7 @@ class HistoryController extends Controller
     private function all(Request $request)
     {
         return AllDataResource::collection(
-            auth()->user()->entries()->latest()->paginate(30)
+            auth()->user()->entries()->orderBy('created_at', 'desc')->paginate(30)
         );
     }
 
