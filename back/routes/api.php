@@ -7,12 +7,14 @@ Route::namespace('Api')->group(function () {
         Route::get('pts', 'PtsController@index');
         Route::apiResource('records', 'RecordsController')->only(['index']);
         Route::put('plans/toggle/{plan}', 'PlansController@toggle');
+        Route::put('achievements/achieve/{achievement}', 'AchievementsController@achieve');
         Route::post('rules/apply/{rule}', 'RulesController@apply');
         Route::get('history', 'HistoryController@index');
         Route::apiResources([
             'entries' => 'EntriesController',
             'plans' => 'PlansController',
             'rules' => 'RulesController',
+            'achievements' => 'AchievementsController',
         ]);
     });
 });

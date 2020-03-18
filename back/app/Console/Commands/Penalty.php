@@ -54,12 +54,14 @@ class Penalty extends Command
         foreach (User::all() as $user) {
             if (
                 !$user
-                    ->plans()
-                    ->whereDate('date', Carbon::yesterday())
+                    ->entries()
+                    ->whereDate('created_at', Carbon::yesterday())
                     ->exists()
             ) {
-                $latestPlanDate = $user->plans()->where('date', '<', Carbon::yesterday())->value('date');
-                $daysWithoutPlanInRow = Carbon::yesterday()->diffInDays($latestPlanDate);
+                $latestEntryDate = $user->entries()
+                    ->whereDate('created_at', '<', Carbon::yesterday())
+                    ->value('created_at');
+                $daysWithoutPlanInRow = Carbon::yesterday()->diffInDays($latestEntryDate);
                 $user->entries()->create([
                     'pts' => $daysWithoutPlanInRow * config('pts.no-plans-coeff'),
                     'comment' => 'Отсутствие планов на день',

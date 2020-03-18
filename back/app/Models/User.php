@@ -31,6 +31,10 @@ class User extends Authenticatable
         return $this->hasOne(Record::class);
     }
 
+    public function acheivements()
+    {
+        return $this->hasMany(Achievement::class);
+    }
 
     public function getCurrentPtsAttribute()
     {

@@ -5,6 +5,7 @@ import PageHistory from "@/pages/History"
 import PagePlan from "@/pages/Plan"
 import PageRecords from "@/pages/Records"
 import PageRules from "@/pages/Rules"
+import PageAchievements from "@/pages/Achievements"
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
     path: "/plan",
     name: "PagePlan",
     component: PagePlan,
+  },
+  {
+    path: "/achievements",
+    name: "PageAchievements",
+    component: PageAchievements,
   },
   {
     path: "/records",

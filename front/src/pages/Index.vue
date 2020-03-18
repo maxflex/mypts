@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height>
     <v-btn
-      :to="{ name: 'PageRecords' }"
+      :to="{ name: 'PageAchievements' }"
       class="btn-top btn-top_left"
       icon
       color="accent"
