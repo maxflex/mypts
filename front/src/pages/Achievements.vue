@@ -184,7 +184,6 @@ export default {
     view(item) {
       this.item = cloneDeep(item)
       this.achieveDialog = true
-      console.log("over here")
     },
 
     achieve() {
