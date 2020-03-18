@@ -5,7 +5,7 @@
       achievement__item_achieved: item.achieved_at !== null,
     }"
   >
-    <h1 class="secondary--text">
+    <h1 class="secondary--text mb-1">
       <Pts :value="item.pts" />
     </h1>
     <div>
@@ -35,7 +35,7 @@ export default {
   max-width: 200px;
   border: 2px solid rgba(#f3377a, 0.5);
   border-radius: 8px;
-  height: 100px;
+  height: 120px;
   margin: 10px;
   display: flex;
   flex-direction: column;
