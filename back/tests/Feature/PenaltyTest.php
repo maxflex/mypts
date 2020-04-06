@@ -31,7 +31,7 @@ class PenaltyTest extends FeatureTestCase
         );
     }
 
-    // public function testNoPlansPenalty()
+    // public function testNoActivityPenalty()
     // {
     //     $plan = factory(Plan::class)->create([
     //         'user_id' => $this->user->id,

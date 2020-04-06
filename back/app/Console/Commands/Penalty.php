@@ -42,14 +42,14 @@ class Penalty extends Command
     public function handle()
     {
         $this->unfinishedPlansPanalty();
-        $this->noPlansPenalty();
+        $this->noActivityPenalty();
     }
 
     /**
-     * Штраф за отсутсвие планов на день
-     * 5 * (который день подряд нет планов)
+     * Штраф за неиспользование приложения
+     * 5 * (который день подряд не используется)
      */
-    public function noPlansPenalty()
+    public function noActivityPenalty()
     {
         foreach (User::all() as $user) {
             if (
@@ -58,13 +58,16 @@ class Penalty extends Command
                     ->whereDate('created_at', Carbon::yesterday())
                     ->exists()
             ) {
-                $latestEntryDate = $user->entries()
+                $latestEntry = $user
+                    ->entries()
+                    ->where('pts', '>=', 0)
                     ->whereDate('created_at', '<', Carbon::yesterday())
-                    ->value('created_at');
-                $daysWithoutPlanInRow = Carbon::yesterday()->diffInDays($latestEntryDate);
+                    ->latest()
+                    ->first();
+                $daysWithoutPlanInRow = Carbon::yesterday()->diffInDays($latestEntry->created_at);
                 $user->entries()->create([
-                    'pts' => $daysWithoutPlanInRow * config('pts.no-plans-coeff'),
-                    'comment' => 'Отсутствие планов на день',
+                    'pts' => $daysWithoutPlanInRow * config('pts.no-activity-penalty'),
+                    'comment' => 'Отсутствие активности за день',
                     'desc' => $daysWithoutPlanInRow > 1 ? " {$daysWithoutPlanInRow} день подряд" : null,
                     'created_at' => Carbon::yesterday()->endOfDay(),
                 ]);

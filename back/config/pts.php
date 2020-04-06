@@ -2,5 +2,5 @@
 return [
     'base' => 1200,
     'unfinished-plans-coeff' => -2,
-    'no-plans-coeff' => -5,
+    'no-activity-penalty' => -5,
 ];
