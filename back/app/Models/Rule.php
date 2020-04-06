@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-use App\Traits\HasPts;
-use Illuminate\Database\Eloquent\Model;
-
-class Rule extends Model
+class Rule extends HasPts
 {
-    use HasPts;
-
     public $timestamps = false;
+
     protected $fillable = [
         'comment', 'pts', 'desc', 'is_food'
     ];

@@ -2,13 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\HasPts;
-use Illuminate\Database\Eloquent\Model;
-
-class Plan extends Model
+class Plan extends HasPts
 {
-    use HasPts;
-
     protected $fillable = [
         'comment', 'pts', 'date', 'is_finished', 'desc'
     ];

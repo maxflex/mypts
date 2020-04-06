@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Traits;
+namespace App\Models;
 
-trait HasPts
+use Illuminate\Database\Eloquent\Model;
+
+class HasPts extends Model
 {
     protected $appends = ['desc_html'];
 
