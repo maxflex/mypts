@@ -40,9 +40,11 @@
           <p class="body-1">
             {{ item.name }}
           </p>
-          <p v-if="item.desc" class="body-2 grey--text">
-            {{ item.desc }}
-          </p>
+          <p
+            v-if="item.desc"
+            class="body-2 grey--text"
+            v-html="item.desc_html"
+          ></p>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -140,14 +142,14 @@ export default {
   methods: {
     loadData() {
       this.loading = true
-      this.$http.get(API_URL).then(r => {
+      this.$http.get(API_URL).then((r) => {
         this.items = r.data
         this.loading = false
       })
     },
 
     loadRecord() {
-      this.$http.get("records").then(r => (this.record = r.data))
+      this.$http.get("records").then((r) => (this.record = r.data))
     },
 
     addDialog() {
@@ -160,9 +162,9 @@ export default {
       if (this.item.id) {
         await this.$http
           .put([API_URL, this.item.id].join("/"), this.item)
-          .then(r => {
+          .then((r) => {
             this.items.splice(
-              this.items.findIndex(e => e.id === this.item.id),
+              this.items.findIndex((e) => e.id === this.item.id),
               1,
               r.data,
             )
@@ -170,7 +172,7 @@ export default {
       } else {
         await this.$http
           .post(API_URL, this.item)
-          .then(r => this.items.unshift(r.data))
+          .then((r) => this.items.unshift(r.data))
       }
       this.adding = false
       this.dialog = false
@@ -188,9 +190,9 @@ export default {
 
     achieve() {
       this.dialogLoading = true
-      this.$http.put([API_URL, "achieve", this.item.id].join("/")).then(r => {
+      this.$http.put([API_URL, "achieve", this.item.id].join("/")).then((r) => {
         this.items.splice(
-          this.items.findIndex(e => e.id === this.item.id),
+          this.items.findIndex((e) => e.id === this.item.id),
           1,
           r.data,
         )

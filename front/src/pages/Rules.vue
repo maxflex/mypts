@@ -3,8 +3,8 @@
     <div
       class="flex-items justify-space-between full-width pa-3 plans-controls"
     >
-      <div style="flex: 1"></div>
-      <div style="flex: 1; white-space: nowrap; text-align: center">
+      <div style="flex: 1;"></div>
+      <div style="flex: 1; white-space: nowrap; text-align: center;">
         <v-chip
           :pill="mode === modes.minus"
           :outlined="mode !== modes.minus"
@@ -33,7 +33,7 @@
           плюс
         </v-chip>
       </div>
-      <div style="flex: 1" class="text-right">
+      <div style="flex: 1;" class="text-right">
         <v-btn icon color="accent" @click="addDialog()">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
@@ -111,7 +111,7 @@
         <v-card-title class="justify-center">
           <Pts class="headline" :value="dialogItem.pts" />
           <v-btn
-            style="position: absolute; right: 4px; top: 4px"
+            style="position: absolute; right: 4px; top: 4px;"
             x-small
             icon
             @click="
@@ -129,9 +129,11 @@
           <p class="body-1">
             {{ dialogItem.comment }}
           </p>
-          <p v-if="dialogItem.desc" class="body-2 grey--text">
-            {{ dialogItem.desc }}
-          </p>
+          <p
+            v-if="dialogItem.desc"
+            class="body-2 grey--text"
+            v-html="dialogItem.desc_html"
+          ></p>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -187,7 +189,7 @@ export default {
   methods: {
     loadData() {
       this.loading = true
-      this.$http.get(apiUrl).then(r => {
+      this.$http.get(apiUrl).then((r) => {
         this.items = r.data
         this.loading = false
       })
@@ -224,10 +226,10 @@ export default {
       if (this.item.id) {
         await this.$http
           .put([apiUrl, this.item.id].join("/"), this.item)
-          .then(r => {
+          .then((r) => {
             this.items.splice()
             this.items.splice(
-              this.items.findIndex(e => e.id === this.item.id),
+              this.items.findIndex((e) => e.id === this.item.id),
               1,
               r.data,
             )
@@ -235,7 +237,7 @@ export default {
       } else {
         await this.$http
           .post(apiUrl, this.item)
-          .then(r => this.items.unshift(r.data))
+          .then((r) => this.items.unshift(r.data))
       }
       this.dialogLoading = false
       this.dialog = false
@@ -249,7 +251,7 @@ export default {
 
   computed: {
     currentItems() {
-      let items = this.items.filter(e => {
+      let items = this.items.filter((e) => {
         if (this.mode === this.modes.food) {
           return e.is_food
         } else if (this.mode === this.modes.plus) {

@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\HasPts;
 use Illuminate\Database\Eloquent\Model;
 
 class Entry extends Model
 {
+    use HasPts;
     protected $fillable = ['comment', 'pts', 'user_id', 'created_at', 'desc'];
 
     public function user()

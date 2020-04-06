@@ -31,9 +31,11 @@
           <p class="body-1">
             {{ dialogItem.comment }}
           </p>
-          <p v-if="dialogItem.desc" class="body-2 grey--text">
-            {{ dialogItem.desc }}
-          </p>
+          <p
+            v-if="dialogItem.desc"
+            class="body-2 grey--text"
+            v-html="dialogItem.desc_html"
+          ></p>
           <span class="caption grey--text">
             {{ formatDate(dialogItem.created_at) }}
           </span>
