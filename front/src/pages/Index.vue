@@ -8,6 +8,16 @@
     >
       <v-icon>mdi-trophy</v-icon>
     </v-btn>
+    <div class="btn-top btn-top_center">
+      <div
+        class="vacation-status vacation-status_outer"
+        :class="$store.state.auth.user.on_vacation ? 'grey' : 'success'"
+        @click="toggleVacation()"
+      >
+        <div class="vacation-status vacation-status_inner"></div>
+      </div>
+    </div>
+
     <v-btn
       class="btn-top btn-top_right"
       icon
@@ -182,6 +192,16 @@ export default {
           this.item = {}
         })
     },
+
+    toggleVacation() {
+      this.$http
+        .put("profile", {
+          on_vacation: !this.$store.state.auth.user.on_vacation,
+        })
+        .then(r => {
+          this.$store.dispatch("auth/setUser", r.data)
+        })
+    },
   },
 }
 </script>
@@ -193,5 +213,33 @@ export default {
   text-align: center;
   left: 0;
   top: -40px;
+}
+.vacation-status {
+  $size: 20px;
+  height: $size;
+  width: $size;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &_inner {
+    height: #{$size / 2};
+    width: #{$size / 2};
+    background: inherit;
+    z-index: 1;
+  }
+  &_outer {
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(white, 0.75);
+    }
+  }
 }
 </style>

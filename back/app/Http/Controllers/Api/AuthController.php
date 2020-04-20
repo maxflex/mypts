@@ -24,9 +24,4 @@ class AuthController extends Controller
 
         return $user;
     }
-
-    public function getUser()
-    {
-        return auth()->user();
-    }
 }

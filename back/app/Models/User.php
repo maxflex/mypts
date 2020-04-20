@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 class User extends Authenticatable
 {
     protected $fillable = [
-        'name', 'email',  'password',
+        'name', 'email',  'password', 'on_vacation'
     ];
 
     public function entries()
@@ -51,6 +51,11 @@ class User extends Authenticatable
                 'updated_at' => now()
             ]);
         }
+    }
+
+    public function scopeNotOnVacation($query)
+    {
+        $query->where('on_vacation', false);
     }
 
     protected static function boot()

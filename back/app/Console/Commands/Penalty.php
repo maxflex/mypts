@@ -51,7 +51,7 @@ class Penalty extends Command
      */
     public function noActivityPenalty()
     {
-        foreach (User::all() as $user) {
+        foreach (User::notOnVacation()->get() as $user) {
             if (
                 !$user
                     ->entries()
@@ -64,13 +64,15 @@ class Penalty extends Command
                     ->whereDate('created_at', '<', Carbon::yesterday())
                     ->latest()
                     ->first();
-                $daysWithoutPlanInRow = Carbon::yesterday()->diffInDays($latestEntry->created_at);
-                $user->entries()->create([
-                    'pts' => $daysWithoutPlanInRow * config('pts.no-activity-penalty'),
-                    'comment' => 'Отсутствие активности за день',
-                    'desc' => $daysWithoutPlanInRow > 1 ? " {$daysWithoutPlanInRow} день подряд" : null,
-                    'created_at' => Carbon::yesterday()->endOfDay(),
-                ]);
+                if ($latestEntry !== null) {
+                    $daysWithoutPlanInRow = Carbon::yesterday()->diffInDays($latestEntry->created_at);
+                    $user->entries()->create([
+                        'pts' => $daysWithoutPlanInRow * config('pts.no-activity-penalty'),
+                        'comment' => 'Отсутствие активности за день',
+                        'desc' => $daysWithoutPlanInRow > 1 ? " {$daysWithoutPlanInRow} день подряд" : null,
+                        'created_at' => Carbon::yesterday()->endOfDay(),
+                    ]);
+                }
             }
         }
     }

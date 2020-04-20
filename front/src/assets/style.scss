@@ -41,4 +41,12 @@
   &_left {
     left: 12px;
   }
+  &_center {
+    width: 50px;
+    left: calc(50% - 25px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+  }
 }

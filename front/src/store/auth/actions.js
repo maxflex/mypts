@@ -10,7 +10,7 @@ export default {
 
   async getLoggedUser({ dispatch }) {
     return this._vm.$http
-      .get("auth")
+      .get("profile")
       .then(r => {
         dispatch("setUser", r.data)
       })
