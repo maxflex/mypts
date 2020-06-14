@@ -10,6 +10,6 @@ class HasPts extends Model
 
     public function getDescHtmlAttribute()
     {
-        return str_replace("\n", "<br />", $this->attributes['desc']);
+        return str_replace("\n", "<br />", @$this->attributes['desc']);
     }
 }
