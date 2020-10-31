@@ -3,16 +3,19 @@
     <v-simple-table class="plans-table">
       <tbody>
         <tr
-          v-for="item in items.filter(e => !('deleted' in e))"
+          v-for="item in items"
           :key="item.id"
           :class="{ 'plans-table_finished': item.is_finished }"
           v-touch="{
-            left: () => confirmDelete(item),
+            left: () => $refs.DeleteDialog.open(item),
           }"
         >
           <td @click="$emit('open', item)">
             <span class="plans-table__plan-comment">
               {{ item.comment }}
+              <span class="grey--text ml-1 caption" v-if="item.time">
+                {{ item.time | time }}
+              </span>
             </span>
           </td>
           <td>
@@ -31,31 +34,13 @@
         </tr>
       </tbody>
     </v-simple-table>
-    <v-dialog v-model="dialog">
-      <v-card>
-        <v-card-title>
-          Удалить план?
-        </v-card-title>
-        <v-card-text>
-          {{ dialogItem.comment }}
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer> </v-spacer>
-          <v-btn text depressed @click="dialog = false">отмена</v-btn>
-          <v-btn
-            color="accent"
-            depressed
-            @click="deleteItem()"
-            :loading="deleting"
-            >Да</v-btn
-          >
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <DeleteDialog @deleted="deleted" label="план" ref="DeleteDialog" />
   </div>
 </template>
 
 <script>
+import DeleteDialog from "@/components/DeleteDialog"
+
 const apiUrl = "plans"
 
 export default {
@@ -65,13 +50,7 @@ export default {
     },
   },
 
-  data() {
-    return {
-      dialog: false,
-      dialogItem: {},
-      deleting: false,
-    }
-  },
+  components: { DeleteDialog },
 
   methods: {
     async toggle(item) {
@@ -79,17 +58,10 @@ export default {
       this.$store.dispatch("menu/getUnfinishedPlansCount")
     },
 
-    confirmDelete(item) {
-      this.dialogItem = item
-      this.dialog = true
-    },
-
-    async deleteItem() {
-      this.deleting = true
-      await this.$http.delete([apiUrl, this.dialogItem.id].join("/"))
-      this.dialogItem.deleted = true
-      this.dialog = false
-      this.deleting = false
+    deleted(item) {
+      const index = this.items.findIndex(e => e.id === item.id)
+      this.items.splice(index, 1)
+      this.$http.delete([apiUrl, item.id].join("/"))
       this.$store.dispatch("menu/getUnfinishedPlansCount")
     },
   },

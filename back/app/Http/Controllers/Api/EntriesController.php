@@ -29,4 +29,9 @@ class EntriesController extends Controller
         );
         return $action;
     }
+
+    public function destroy(Entry $entry)
+    {
+        $entry->delete();
+    }
 }

@@ -31,7 +31,6 @@ export default {
 
 <style lang="scss">
 .achievement__item {
-  width: 48%;
   max-width: 200px;
   border: 2px solid rgba(#f3377a, 0.5);
   border-radius: 8px;
@@ -42,6 +41,7 @@ export default {
   align-items: center;
   justify-content: center;
   opacity: 0.3;
+  text-align: center;
   &_achieved {
     opacity: 1;
     color: white;

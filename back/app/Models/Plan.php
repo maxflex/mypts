@@ -5,7 +5,7 @@ namespace App\Models;
 class Plan extends HasPts
 {
     protected $fillable = [
-        'comment', 'pts', 'date', 'is_finished', 'desc'
+        'comment', 'pts', 'date', 'is_finished', 'desc', 'time'
     ];
 
     protected $casts = [

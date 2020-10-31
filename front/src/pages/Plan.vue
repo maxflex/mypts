@@ -103,6 +103,12 @@
               ></v-text-field>
             </div>
             <Expander>
+              <v-text-field
+                hide-details
+                v-model="item.time"
+                placeholder="время"
+                v-mask="'##:##'"
+              />
               <v-textarea
                 hide-details
                 rows="3"

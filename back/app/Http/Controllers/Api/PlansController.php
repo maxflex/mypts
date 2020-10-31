@@ -23,11 +23,19 @@ class PlansController extends Controller
             return $query->count();
         }
 
-        return $query->get();
+        return $query
+            ->orderByRaw('IF (time is null, 0, 1) DESC')
+            ->orderBy('time', 'asc')
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'comment' => ['required'],
+            'pts' => ['required']
+        ]);
         $plan = auth()->user()->plans()->create($request->all());
         return $plan;
     }

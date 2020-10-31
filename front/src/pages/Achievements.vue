@@ -22,7 +22,7 @@
       <div v-if="loading" class="align-self-center full-width text-center">
         <Loader />
       </div>
-      <div v-else class="flex-items full-width align-start">
+      <div v-else class="achievement__list">
         <Item
           v-for="item in items"
           :key="item.id"
@@ -142,14 +142,14 @@ export default {
   methods: {
     loadData() {
       this.loading = true
-      this.$http.get(API_URL).then((r) => {
+      this.$http.get(API_URL).then(r => {
         this.items = r.data
         this.loading = false
       })
     },
 
     loadRecord() {
-      this.$http.get("records").then((r) => (this.record = r.data))
+      this.$http.get("records").then(r => (this.record = r.data))
     },
 
     addDialog() {
@@ -162,9 +162,9 @@ export default {
       if (this.item.id) {
         await this.$http
           .put([API_URL, this.item.id].join("/"), this.item)
-          .then((r) => {
+          .then(r => {
             this.items.splice(
-              this.items.findIndex((e) => e.id === this.item.id),
+              this.items.findIndex(e => e.id === this.item.id),
               1,
               r.data,
             )
@@ -172,7 +172,7 @@ export default {
       } else {
         await this.$http
           .post(API_URL, this.item)
-          .then((r) => this.items.unshift(r.data))
+          .then(r => this.items.unshift(r.data))
       }
       this.adding = false
       this.dialog = false
@@ -190,9 +190,9 @@ export default {
 
     achieve() {
       this.dialogLoading = true
-      this.$http.put([API_URL, "achieve", this.item.id].join("/")).then((r) => {
+      this.$http.put([API_URL, "achieve", this.item.id].join("/")).then(r => {
         this.items.splice(
-          this.items.findIndex((e) => e.id === this.item.id),
+          this.items.findIndex(e => e.id === this.item.id),
           1,
           r.data,
         )
@@ -206,3 +206,13 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.achievement {
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: min-content;
+  }
+}
+</style>

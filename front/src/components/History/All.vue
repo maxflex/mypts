@@ -2,7 +2,14 @@
   <div>
     <v-simple-table>
       <tbody>
-        <tr @click="open(item)" v-for="(item, index) in items" :key="item.id">
+        <tr
+          @click="open(item)"
+          v-for="(item, index) in items"
+          :key="item.id"
+          v-touch="{
+            left: () => $refs.DeleteDialog.open(item),
+          }"
+        >
           <td width="1" class="next-day-td">
             <div v-if="isNextDay(index)" class="next-day">
               <span>
@@ -42,11 +49,14 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <DeleteDialog @deleted="deleted" ref="DeleteDialog" />
   </div>
 </template>
 
 <script>
+import DeleteDialog from "@/components/DeleteDialog"
 import Pts from "@/components/Pts"
+import { API_URL } from "@/components/Entry"
 
 export default {
   name: "all",
@@ -57,14 +67,14 @@ export default {
     },
   },
 
+  components: { Pts, DeleteDialog },
+
   data() {
     return {
       dialogItem: {},
       dialog: false,
     }
   },
-
-  components: { Pts },
 
   methods: {
     isNextDay(index) {
@@ -86,6 +96,12 @@ export default {
     open(item) {
       this.dialogItem = item
       this.dialog = true
+    },
+
+    deleted(item) {
+      const index = this.items.findIndex(e => e.id === item.id)
+      this.items.splice(index, 1)
+      this.$http.delete([API_URL, item.id].join("/"))
     },
   },
 }

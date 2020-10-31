@@ -7,6 +7,7 @@ require("@/assets/style.scss")
 import axios from "axios"
 require("@/plugins/filters")
 import Cookies from "js-cookie"
+import VueTheMask from "vue-the-mask"
 
 const http = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
@@ -24,6 +25,8 @@ Vue.prototype.$http = http
 Vue.prototype.$setLoader = function(loading) {
   this.$store.commit("loading", loading)
 }
+
+Vue.use(VueTheMask)
 
 require("./plugins/moment")
 
