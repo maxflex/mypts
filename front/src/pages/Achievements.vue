@@ -213,6 +213,7 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: min-content;
+    width: 100%;
   }
 }
 </style>
