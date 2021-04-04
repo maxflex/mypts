@@ -8,6 +8,7 @@ import axios from "axios"
 require("@/plugins/filters")
 import Cookies from "js-cookie"
 import VueTheMask from "vue-the-mask"
+import "./registerServiceWorker"
 
 const http = axios.create({
   baseURL: process.env.VUE_APP_API_URL,

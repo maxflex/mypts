@@ -32,8 +32,10 @@ export default {
       }
       // save api token in storage
       Cookies.set(apiTokenField, user[apiTokenField], { expires: 60 })
+      localStorage.setItem("user", user)
     } else {
       this._vm.$http.defaults.headers.common = {}
+      localStorage.removeItem("user")
     }
     commit("SET_USER", user)
   },
