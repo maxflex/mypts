@@ -25,7 +25,7 @@ export default {
     dispatch("setUser", null)
   },
 
-  setUser({ commit }, user) {
+  setUser({ commit, dispatch }, user) {
     if (user !== null && apiTokenField in user) {
       this._vm.$http.defaults.headers.common = {
         Authorization: `Bearer ${user[apiTokenField]}`,
@@ -33,6 +33,7 @@ export default {
       // save api token in storage
       Cookies.set(apiTokenField, user[apiTokenField], { expires: 60 })
       localStorage.setItem("user", user)
+      dispatch("menu/getUnfinishedPlansCount", null, { root: true })
     } else {
       this._vm.$http.defaults.headers.common = {}
       localStorage.removeItem("user")

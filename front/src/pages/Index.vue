@@ -57,6 +57,21 @@
             <Pts class="mr-1" :value="pts.yesterday" />
             <span class="grey--text">вчера</span>
           </div>
+          <div class="flex-items mt-10 justify-center">
+            <v-btn
+              color="success"
+              rounded
+              outlined
+              class="mr-2"
+              small
+              @click="quickAdd(3)"
+            >
+              +3
+            </v-btn>
+            <v-btn color="success" rounded outlined small @click="quickAdd(5)">
+              +5
+            </v-btn>
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -191,6 +206,14 @@ export default {
           this.dialog = false
           this.item = {}
         })
+    },
+
+    quickAdd(pts) {
+      this.item = {
+        pts,
+        comment: "Быстрое вознаграждение",
+      }
+      this.add()
     },
 
     toggleVacation() {
