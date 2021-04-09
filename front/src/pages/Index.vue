@@ -57,24 +57,37 @@
             <Pts class="mr-1" :value="pts.yesterday" />
             <span class="grey--text">вчера</span>
           </div>
-          <div class="flex-items mt-10 justify-center">
-            <v-btn
-              color="success"
-              rounded
-              outlined
-              class="mr-2"
-              small
-              @click="quickAdd(3)"
-            >
-              +3
-            </v-btn>
-            <v-btn color="success" rounded outlined small @click="quickAdd(5)">
-              +5
-            </v-btn>
-          </div>
         </div>
       </v-col>
     </v-row>
+    <div class="quick-controls">
+      <div>
+        <v-btn
+          v-for="i in [1, 3, 5]"
+          :key="i"
+          color="success"
+          rounded
+          outlined
+          small
+          @click="quickAdd(i)"
+        >
+          +{{ i }}
+        </v-btn>
+      </div>
+      <div>
+        <v-btn
+          v-for="i in [1, 3, 5]"
+          :key="i"
+          color="error"
+          rounded
+          outlined
+          small
+          @click="quickAdd(i * -1)"
+        >
+          -{{ i }}
+        </v-btn>
+      </div>
+    </div>
     <v-dialog v-model="dialog">
       <v-card outlined class="full-width">
         <v-card-text>
@@ -211,7 +224,7 @@ export default {
     quickAdd(pts) {
       this.item = {
         pts,
-        comment: "Быстрое вознаграждение",
+        comment: pts > 0 ? "Быстрое вознаграждение" : "Быстрое наказание",
       }
       this.add()
     },
@@ -262,6 +275,19 @@ export default {
       height: 100%;
       border-radius: 50%;
       background: rgba(white, 0.75);
+    }
+  }
+}
+.quick-controls {
+  position: absolute;
+  bottom: 15%;
+  left: 0%;
+  width: 100%;
+  text-align: center;
+  & > div {
+    margin-bottom: 10px;
+    & > *:not(:last-child) {
+      margin-right: 10px;
     }
   }
 }
