@@ -5,6 +5,7 @@ import PageHistory from "@/pages/History"
 import PagePlan from "@/pages/Plan"
 import PageRecords from "@/pages/Records"
 import PageRules from "@/pages/Rules"
+import PageGraph from "@/pages/Graph"
 import PageAchievements from "@/pages/Achievements"
 
 Vue.use(VueRouter)
@@ -39,6 +40,11 @@ const routes = [
     path: "/rules",
     name: "PageRules",
     component: PageRules,
+  },
+  {
+    path: "/graph",
+    name: "PageGraph",
+    component: PageGraph,
   },
 ]
 

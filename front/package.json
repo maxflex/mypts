@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "chart.js": "2",
     "core-js": "^3.6.4",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.15",
@@ -18,6 +19,7 @@
     "register-service-worker": "^1.7.1",
     "sass-loader": "^8.0.2",
     "vue": "^2.6.11",
+    "vue-chartjs": "^3.5.1",
     "vue-infinite-loading": "^2.4.4",
     "vue-router": "^3.1.5",
     "vue-the-mask": "^0.11.1",

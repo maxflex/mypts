@@ -73,11 +73,12 @@
           <div class="d-flex flex-column">
             <div>
               <v-menu offset-y :value="autocomplete.length > 0">
-                <template v-slot:activator>
+                <template v-slot:activator="{ on }">
                   <v-text-field
                     hide-details
                     v-model="item.comment"
                     placeholder="комментарий"
+                    v-on="on"
                     @keydown="search"
                   />
                 </template>
@@ -140,7 +141,7 @@
 const apiUrl = "plans"
 import PlanList from "@/components/PlanList"
 import Loader from "@/components/Loader"
-import { debounce, cloneDeep } from "lodash"
+import { debounce, cloneDeep, uniqBy } from "lodash"
 import Expander from "@/components/Expander"
 
 export default {
@@ -185,7 +186,7 @@ export default {
         take: 10,
       }
       this.$http.get(apiUrl, { params }).then(r => {
-        this.autocomplete = r.data
+        this.autocomplete = uniqBy(r.data, "comment")
       })
     }, 300)
   },
