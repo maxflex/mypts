@@ -93,7 +93,7 @@
         <v-card-text>
           <div class="d-flex flex-column">
             <div>
-              <v-menu offset-y :value="autocomplete.length > 0">
+              <v-menu offset-y>
                 <template v-slot:activator="{ on }">
                   <v-text-field
                     hide-details
@@ -103,7 +103,7 @@
                     v-on="on"
                   />
                 </template>
-                <v-list dense>
+                <v-list dense v-if="autocomplete.length > 0">
                   <v-list-item
                     @click="selectAutocomplete(item)"
                     v-for="item in autocomplete"

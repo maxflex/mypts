@@ -72,7 +72,7 @@
         <v-card-text>
           <div class="d-flex flex-column">
             <div>
-              <v-menu offset-y :value="autocomplete.length > 0">
+              <v-menu offset-y>
                 <template v-slot:activator="{ on }">
                   <v-text-field
                     hide-details
@@ -82,7 +82,7 @@
                     @keydown="search"
                   />
                 </template>
-                <v-list dense>
+                <v-list dense v-if="autocomplete.length > 0">
                   <v-list-item
                     @click="selectAutocomplete(item)"
                     v-for="item in autocomplete"
@@ -138,8 +138,7 @@
 </template>
 
 <script>
-const apiUrl = "plans"
-import PlanList from "@/components/PlanList"
+import { PlanList, MODEL_DEFAULTS, API_URL } from "@/components/Plan"
 import Loader from "@/components/Loader"
 import { debounce, cloneDeep, uniqBy } from "lodash"
 import Expander from "@/components/Expander"
@@ -149,11 +148,10 @@ export default {
 
   data() {
     return {
-      apiUrl,
       items: [],
       date: this.$moment().format("YYYY-MM-DD"),
       dialog: false,
-      item: {},
+      item: MODEL_DEFAULTS,
       autocomplete: [],
       adding: false,
       loading: true,
@@ -162,12 +160,6 @@ export default {
 
   watch: {
     date() {
-      // this.date =
-      //   newVal === this.modes.today
-      //     ? this.$moment().format("YYYY-MM-DD")
-      //     : this.$moment()
-      //         .add(1, "day")
-      //         .format("YYYY-MM-DD")
       this.loadData()
     },
   },
@@ -185,7 +177,7 @@ export default {
         desc: this.item.desc,
         take: 10,
       }
-      this.$http.get(apiUrl, { params }).then(r => {
+      this.$http.get(API_URL, { params }).then(r => {
         this.autocomplete = uniqBy(r.data, "comment")
       })
     }, 300)
@@ -197,7 +189,7 @@ export default {
         date: this.date,
       }
       this.loading = true
-      this.$http.get(apiUrl, { params }).then(r => {
+      this.$http.get(API_URL, { params }).then(r => {
         this.items = r.data
         this.loading = false
       })
@@ -210,7 +202,12 @@ export default {
     },
 
     addDialog() {
-      this.item = {}
+      this.item = cloneDeep(MODEL_DEFAULTS)
+      this.dialog = true
+    },
+
+    open(item) {
+      this.item = cloneDeep(item)
       this.dialog = true
     },
 
@@ -218,7 +215,7 @@ export default {
       this.adding = true
       if (this.item.id) {
         await this.$http
-          .put([apiUrl, this.item.id].join("/"), this.item)
+          .put([API_URL, this.item.id].join("/"), this.item)
           .then(r => {
             this.items.splice()
             this.items.splice(
@@ -230,7 +227,7 @@ export default {
       } else {
         this.item.date = this.date
         await this.$http
-          .post(apiUrl, this.item)
+          .post(API_URL, this.item)
           .then(r => this.items.unshift(r.data))
           .finally(() => {
             this.$store.dispatch("menu/getUnfinishedPlansCount")
@@ -238,11 +235,6 @@ export default {
       }
       this.adding = false
       this.dialog = false
-    },
-
-    open(item) {
-      this.item = cloneDeep(item)
-      this.dialog = true
     },
   },
 

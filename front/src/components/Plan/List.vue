@@ -40,8 +40,7 @@
 
 <script>
 import DeleteDialog from "@/components/DeleteDialog"
-
-const apiUrl = "plans"
+import { API_URL } from "./"
 
 export default {
   props: {
@@ -54,14 +53,14 @@ export default {
 
   methods: {
     async toggle(item) {
-      await this.$http.put([apiUrl, "toggle", item.id].join("/"))
+      await this.$http.put([API_URL, "toggle", item.id].join("/"))
       this.$store.dispatch("menu/getUnfinishedPlansCount")
     },
 
     deleted(item) {
       const index = this.items.findIndex(e => e.id === item.id)
       this.items.splice(index, 1)
-      this.$http.delete([apiUrl, item.id].join("/"))
+      this.$http.delete([API_URL, item.id].join("/"))
       this.$store.dispatch("menu/getUnfinishedPlansCount")
     },
   },
