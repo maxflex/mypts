@@ -18,7 +18,7 @@ class AchievementsController extends Controller
     public function store(Request $request)
     {
         $achievement = auth()->user()->acheivements()->create($request->all());
-        return $achievement;
+        return $achievement->fresh();
     }
 
     public function achieve(Achievement $achievement)

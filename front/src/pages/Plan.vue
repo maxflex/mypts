@@ -15,6 +15,8 @@
           <v-date-picker
             no-title
             v-model="date"
+            :events="events"
+            event-color="success lighten-2"
             :first-day-of-week="1"
           ></v-date-picker>
         </v-menu>
@@ -149,6 +151,7 @@ export default {
   data() {
     return {
       items: [],
+      events: [],
       date: this.$moment().format("YYYY-MM-DD"),
       dialog: false,
       item: MODEL_DEFAULTS,
@@ -166,6 +169,9 @@ export default {
 
   created() {
     this.loadData()
+
+    // TODO: load on calendar open
+    this.loadEvents()
 
     this.search = debounce(() => {
       if (this.item.comment.length < 3) {
@@ -193,6 +199,10 @@ export default {
         this.items = r.data
         this.loading = false
       })
+    },
+
+    loadEvents() {
+      this.$http.get(API_URL + "/events").then(r => (this.events = r.data))
     },
 
     selectAutocomplete(item) {

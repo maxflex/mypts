@@ -59,4 +59,9 @@ class PlansController extends Controller
             $plan->complete();
         }
     }
+
+    public function events()
+    {
+        return auth()->user()->plans()->unfinished()->pluck('date');
+    }
 }

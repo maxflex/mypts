@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+
 class Plan extends HasPts
 {
     protected $fillable = [
         'comment', 'pts', 'date', 'is_finished', 'desc', 'time'
-    ];
-
-    protected $casts = [
-        'date' => 'date'
     ];
 
     public function user()
@@ -28,7 +26,7 @@ class Plan extends HasPts
             'pts' => $this->pts,
             'comment' => $this->comment,
             'desc' => $this->desc,
-            'created_at' => now() > $this->date ? $this->date->endOfDay() : now()
+            'created_at' => now() > $this->date ? (new Carbon($this->date))->endOfDay() : now()
         ]);
         $this->is_finished = true;
         $this->save();

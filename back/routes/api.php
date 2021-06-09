@@ -9,6 +9,7 @@ Route::namespace('Api')->group(function () {
         Route::put('achievements/achieve/{achievement}', 'AchievementsController@achieve');
         Route::post('rules/apply/{rule}', 'RulesController@apply');
         Route::get('history', 'HistoryController@index');
+        Route::get('plans/events', 'PlansController@events');
         Route::apiResources([
             'entries' => 'EntriesController',
             'plans' => 'PlansController',

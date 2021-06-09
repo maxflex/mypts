@@ -63,7 +63,7 @@
     <div class="quick-controls">
       <div>
         <v-btn
-          v-for="i in [1, 3, 5]"
+          v-for="i in [1, 2, 3]"
           :key="i"
           color="success"
           rounded
@@ -76,7 +76,7 @@
       </div>
       <div>
         <v-btn
-          v-for="i in [1, 3, 5]"
+          v-for="i in [1, 2, 3]"
           :key="i"
           color="error"
           rounded
