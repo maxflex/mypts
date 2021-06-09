@@ -62,6 +62,6 @@ class PlansController extends Controller
 
     public function events()
     {
-        return auth()->user()->plans()->unfinished()->pluck('date');
+        return auth()->user()->plans()->unfinished()->whereDate('date', '>', now())->pluck('date');
     }
 }
