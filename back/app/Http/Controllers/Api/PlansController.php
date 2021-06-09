@@ -10,8 +10,11 @@ class PlansController extends Controller
 {
     protected $filters = [
         'equals' => ['date', 'is_finished'],
+        'interval' => ['interval'],
         'like' => ['comment']
     ];
+
+    protected $mapFilters = ['interval' => 'date'];
 
     public function index(Request $request)
     {
@@ -24,8 +27,10 @@ class PlansController extends Controller
         }
 
         return $query
+            ->orderBy('date', 'desc')
             ->orderByRaw('IF (time is null, 0, 1) DESC')
             ->orderBy('time', 'asc')
+            ->orderBy('pts', 'desc')
             ->orderBy('id', 'desc')
             ->get();
     }

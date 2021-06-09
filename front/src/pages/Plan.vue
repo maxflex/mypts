@@ -21,27 +21,17 @@
           ></v-date-picker>
         </v-menu>
       </div>
-      <div style="flex: 1; white-space: nowrap; text-align: center">
-        <v-chip
-          :pill="isToday"
-          :outlined="!isToday"
-          class="mx-2"
-          @click="date = $moment().format('YYYY-MM-DD')"
-          :class="{ accent: isToday }"
-          >сегодня</v-chip
-        >
-        <v-chip
-          :pill="isTomorrow"
-          :outlined="!isTomorrow"
-          @click="
-            date = $moment()
-              .add(1, 'day')
-              .format('YYYY-MM-DD')
-          "
-          :class="{ accent: isTomorrow }"
-          class="mx-2"
-          >завтра</v-chip
-        >
+      <div
+        style="flex: 1; white-space: nowrap; text-align: center"
+        class="grey--text"
+      >
+        <template v-if="isToday">
+          сегодня,
+        </template>
+        <template v-else-if="isTomorrow">
+          завтра,
+        </template>
+        {{ $moment(date).format("dddd D MMMM") }}
       </div>
       <div style="flex: 1" class="text-right">
         <v-btn icon color="accent" @click="addDialog()">
@@ -49,25 +39,30 @@
         </v-btn>
       </div>
     </div>
-    <div class="full-width flex-grow-1 d-flex">
-      <div v-if="loading" class="align-self-center full-width text-center">
+    <div class="full-width flex-grow-1">
+      <div
+        v-if="loading"
+        class="full-width fill-height d-flex align-center justify-center"
+      >
         <Loader />
       </div>
-      <PlanList
-        @open="open"
-        class="mt-2"
-        v-else-if="items.length > 0"
-        :items="items"
-      />
-      <div class="grey--text align-self-center full-width text-center" v-else>
-        <div>
-          на
-          <span v-if="isToday">сегодня</span>
-          <span v-else-if="isTomorrow">завтра</span>
-          <span v-else>{{ $moment(date).format("DD MMMM") }}</span>
+      <template v-else>
+        <PlanList
+          @open="open"
+          class="mt-2"
+          v-if="items.length > 0"
+          :items="items"
+        />
+        <div class="grey--text py-12 my-12 text-center" v-else>
           планов нет
         </div>
-      </div>
+        <template v-if="isToday && weekItems.length > 0">
+          <div class="grey--text text-center mt-12">
+            на этой неделе
+          </div>
+          <PlanList @open="open" class="mt-2" :items="weekItems" />
+        </template>
+      </template>
     </div>
     <v-dialog v-model="dialog">
       <v-card outlined class="full-width">
@@ -151,6 +146,7 @@ export default {
   data() {
     return {
       items: [],
+      weekItems: [],
       events: [],
       date: this.$moment().format("YYYY-MM-DD"),
       dialog: false,
@@ -168,9 +164,17 @@ export default {
   },
 
   created() {
-    this.loadData()
+    this.endOfWeekDate = this.$moment()
+      .endOf("week")
+      .format("YYYY-MM-DD")
+    this.tomorrowDate = this.$moment()
+      .add(1, "day")
+      .format("YYYY-MM-DD")
 
-    // TODO: load on calendar open
+    this.loadData()
+    this.loadWeekData()
+
+    // TODO: lazy-load on calendar open
     this.loadEvents()
 
     this.search = debounce(() => {
@@ -199,6 +203,19 @@ export default {
         this.items = r.data
         this.loading = false
       })
+    },
+
+    loadWeekData() {
+      if (this.isEndOfWeek) {
+        return
+      }
+      const params = {
+        interval: {
+          start: this.tomorrowDate,
+          end: this.endOfWeekDate,
+        },
+      }
+      this.$http.get(API_URL, { params }).then(r => (this.weekItems = r.data))
     },
 
     loadEvents() {
@@ -253,12 +270,10 @@ export default {
       return this.date === this.$moment().format("YYYY-MM-DD")
     },
     isTomorrow() {
-      return (
-        this.date ===
-        this.$moment()
-          .add(1, "day")
-          .format("YYYY-MM-DD")
-      )
+      return this.date === this.tomorrowDate
+    },
+    isEndOfWeek() {
+      return this.date === this.endOfWeekDate
     },
   },
 }
