@@ -18,12 +18,12 @@
               </span>
             </span>
           </td>
-          <td>
+          <td width="60">
             <span class="font-weight-medium">
               {{ item.pts }}
             </span>
           </td>
-          <td class="text-right" @click="toggle(item)">
+          <td class="text-right" @click="toggle(item)" width="56">
             <v-checkbox
               v-model="item.is_finished"
               color="accent"
