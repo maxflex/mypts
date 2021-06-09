@@ -6,15 +6,12 @@
       icon
       color="accent"
     >
-      <v-icon>mdi-trophy</v-icon>
+      <v-icon>mdi-medal-outline</v-icon>
     </v-btn>
     <div class="btn-top btn-top_center">
-      <div
-        class="vacation-status vacation-status_outer"
-        :class="$store.state.auth.user.on_vacation ? 'grey' : 'success'"
-        @click="toggleVacation()"
-      >
-        <div class="vacation-status vacation-status_inner"></div>
+      <v-icon color="secondary" small>mdi-trophy</v-icon>
+      <div class="font-weight-bold ml-1 secondary--text">
+        {{ $store.state.auth.user.record.pts | formatPts }}
       </div>
     </div>
 
@@ -32,7 +29,10 @@
         <div v-else>
           <div class="justify-center flex-items relative">
             <v-scale-transition>
-              <div v-if="isNewRecord" class="new-record">
+              <div
+                v-if="$store.state.auth.user.record.is_new"
+                class="new-record"
+              >
                 <v-chip color="success" small>
                   <v-icon small class="mr-1">mdi-trophy</v-icon>
                   новый рекорд
@@ -169,7 +169,6 @@ export default {
       item: {},
       autocomplete: [],
       adding: false,
-      isNewRecord: false,
     }
   },
 
@@ -195,13 +194,9 @@ export default {
   methods: {
     loadData() {
       this.pts = undefined
-      this.$http.get(apiUrl).then(r => {
-        this.pts = r.data
-        this.$nextTick(() => {
-          this.isNewRecord = r.data.isNewRecord
-          this.$store.commit("menu/setIsNewRecord", this.isNewRecord)
-        })
-      })
+      this.$http.get(apiUrl).then(r => (this.pts = r.data))
+      // check if new record
+      this.$store.dispatch("auth/getLoggedUser")
     },
 
     selectAutocomplete(item) {

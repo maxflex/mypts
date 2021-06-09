@@ -12,7 +12,6 @@ class PtsController extends Controller
     {
 
         return [
-            'isNewRecord' => auth()->user()->record->isNew,
             'currentPts' =>  auth()->user()->currentPts,
             'today' =>  auth()->user()->entries()->whereDate('created_at', Carbon::today())->sum('pts'),
             'yesterday' =>  auth()->user()->entries()->whereDate('created_at', Carbon::yesterday())->sum('pts'),

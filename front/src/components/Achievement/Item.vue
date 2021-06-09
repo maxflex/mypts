@@ -2,7 +2,7 @@
   <div
     class="achievement__item"
     :class="{
-      achievement__item_achieved: item.achieved_at !== null,
+      achievement__item_achieved: item.is_achieved,
     }"
   >
     <h1 class="secondary--text mb-1">

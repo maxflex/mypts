@@ -14,6 +14,10 @@ class ProfileResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return extract_fields($this, [
+            'api_token', 'on_vacation'
+        ], [
+            'record' => $this->record
+        ]);
     }
 }

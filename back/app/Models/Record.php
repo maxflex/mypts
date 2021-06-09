@@ -10,6 +10,7 @@ class Record extends Model
     public $timestamps = false;
 
     protected $fillable = ['pts', 'updated_at'];
+    protected $appends = ['is_new'];
 
     public function user()
     {

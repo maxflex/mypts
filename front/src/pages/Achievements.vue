@@ -4,13 +4,16 @@
       <v-btn @click="$router.back()" icon color="grey">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
-      <div class="flex-grow-1">
-        <div v-if="record !== undefined" class="justify-center flex-items">
-          <v-icon color="secondary" small>mdi-trophy</v-icon>
-          <div class="font-weight-bold ml-1 secondary--text">
-            {{ record.pts | formatPts }}
-          </div>
-        </div>
+      <div class="flex-grow-1 text-center" style="font-size: 14px">
+        <template v-if="!loading">
+          <span class="secondary--text">
+            {{ items.filter(e => e.is_achieved).length }}
+          </span>
+          <span class="grey--text">
+            /
+            {{ items.length }}
+          </span>
+        </template>
       </div>
       <div class="text-right">
         <v-btn icon color="accent" @click="addDialog()">
@@ -130,13 +133,11 @@ export default {
       item: {},
       achieveDialog: false,
       dialogLoading: false,
-      record: undefined,
     }
   },
 
   created() {
     this.loadData()
-    this.loadRecord()
   },
 
   methods: {
@@ -146,10 +147,6 @@ export default {
         this.items = r.data
         this.loading = false
       })
-    },
-
-    loadRecord() {
-      this.$http.get("records").then(r => (this.record = r.data))
     },
 
     addDialog() {
