@@ -64,7 +64,10 @@
     <v-dialog v-model="dialog">
       <v-card outlined class="full-width">
         <v-card-text>
-          <div class="body-1 grey--text pt-5" v-if="item.date !== todayDate">
+          <div
+            class="body-1 grey--text pt-5"
+            v-if="item.id && item.date !== todayDate"
+          >
             {{ $moment(item.date).format("dddd D MMMM") }}
           </div>
           <div class="d-flex flex-column">
@@ -230,7 +233,10 @@ export default {
     },
 
     addDialog() {
-      this.item = cloneDeep(MODEL_DEFAULTS)
+      this.item = {
+        ...MODEL_DEFAULTS,
+        date: this.date,
+      }
       this.dialog = true
     },
 
@@ -253,13 +259,15 @@ export default {
             )
           })
       } else {
-        this.item.date = this.date
-        await this.$http
-          .post(API_URL, this.item)
-          .then(r => this.items.unshift(r.data))
-          .finally(() => {
+        await this.$http.post(API_URL, this.item).then(r => {
+          const item = r.data
+          if (item.date === this.todayDate) {
             this.$store.dispatch("menu/getUnfinishedPlansCount")
-          })
+          } else {
+            this.loadWeekData()
+          }
+          this.items.unshift(item)
+        })
       }
       this.adding = false
       this.dialog = false
