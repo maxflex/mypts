@@ -39,14 +39,11 @@
         </v-btn>
       </div>
     </div>
-    <div class="full-width flex-grow-1">
-      <div
-        v-if="loading"
-        class="full-width fill-height d-flex align-center justify-center"
-      >
+    <div class="full-width d-flex flex-grow-1">
+      <div v-if="loading" class="full-width d-flex justify-center align-center">
         <Loader />
       </div>
-      <template v-else>
+      <div class="full-width" v-else>
         <PlanList
           @open="open"
           class="mt-2"
@@ -62,11 +59,14 @@
           </div>
           <PlanList @open="open" class="mt-2" :items="weekItems" />
         </template>
-      </template>
+      </div>
     </div>
     <v-dialog v-model="dialog">
       <v-card outlined class="full-width">
         <v-card-text>
+          <div class="body-1 grey--text pt-5" v-if="item.date !== todayDate">
+            {{ $moment(item.date).format("dddd D MMMM") }}
+          </div>
           <div class="d-flex flex-column">
             <div>
               <v-menu offset-y>
@@ -164,6 +164,7 @@ export default {
   },
 
   created() {
+    this.todayDate = this.$moment().format("YYYY-MM-DD")
     this.endOfWeekDate = this.$moment()
       .endOf("week")
       .format("YYYY-MM-DD")
@@ -267,7 +268,7 @@ export default {
 
   computed: {
     isToday() {
-      return this.date === this.$moment().format("YYYY-MM-DD")
+      return this.date === this.todayDate
     },
     isTomorrow() {
       return this.date === this.tomorrowDate

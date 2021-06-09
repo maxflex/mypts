@@ -27,7 +27,7 @@ class PlansController extends Controller
         }
 
         return $query
-            ->orderBy('date', 'desc')
+            ->orderBy('date', 'asc')
             ->orderByRaw('IF (time is null, 0, 1) DESC')
             ->orderBy('time', 'asc')
             ->orderBy('pts', 'desc')
