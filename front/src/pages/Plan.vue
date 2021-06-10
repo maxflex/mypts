@@ -64,12 +64,6 @@
     <v-dialog v-model="dialog">
       <v-card outlined class="full-width">
         <v-card-text>
-          <div
-            class="body-1 grey--text pt-5"
-            v-if="item.id && item.date !== todayDate"
-          >
-            {{ $moment(item.date).format("dddd D MMMM") }}
-          </div>
           <div class="d-flex flex-column">
             <div>
               <v-menu offset-y>
