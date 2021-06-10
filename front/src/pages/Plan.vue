@@ -103,13 +103,16 @@
                 v-model="item.pts"
               ></v-text-field>
             </div>
-            <Expander>
-              <v-text-field
-                hide-details
-                v-model="item.time"
-                placeholder="время"
-                v-mask="'##:##'"
-              />
+            <Expander :key="dialog">
+              <div class="flex-items">
+                <DatePicker v-model="item.date" />
+                <v-text-field
+                  hide-details
+                  v-model="item.time"
+                  placeholder="время"
+                  v-mask="'##:##'"
+                />
+              </div>
               <v-textarea
                 hide-details
                 rows="3"
@@ -142,9 +145,10 @@ import { PlanList, MODEL_DEFAULTS, API_URL } from "@/components/Plan"
 import Loader from "@/components/Loader"
 import { debounce, cloneDeep, uniqBy } from "lodash"
 import Expander from "@/components/Expander"
+import DatePicker from "@/components/DatePicker"
 
 export default {
-  components: { PlanList, Loader, Expander },
+  components: { PlanList, Loader, Expander, DatePicker },
 
   data() {
     return {

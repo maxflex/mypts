@@ -39,8 +39,8 @@
         <v-card-title class="justify-center">
           <Pts class="headline" :value="item.pts" />
         </v-card-title>
-        <v-card-text>
-          <p class="body-1">
+        <v-card-text class="pb-3">
+          <p class="body-1 font-weight-medium text-center">
             {{ item.name }}
           </p>
           <p
@@ -48,11 +48,19 @@
             class="body-2 grey--text"
             v-html="item.desc_html"
           ></p>
+          <template v-if="item.is_achieved">
+            <v-divider class="mb-3" />
+            <div class="caption success--text d-flex justify-center">
+              <v-icon color="success" small class="mr-1">
+                mdi-check-bold
+              </v-icon>
+              {{ item.achieved_at | dateTime }}
+            </div>
+          </template>
         </v-card-text>
-        <v-card-actions>
+        <v-card-actions v-if="!item.is_achieved">
           <v-spacer />
           <v-btn
-            v-if="item.achieved_at === null"
             depressed
             class="px-5"
             color="accent"
@@ -61,9 +69,6 @@
           >
             Достигнуть
           </v-btn>
-          <span class="caption grey--text" v-else>
-            достигнуто {{ $moment(item.achieved_at).format("DD MMMM YYYY") }}
-          </span>
           <v-spacer />
         </v-card-actions>
       </v-card>

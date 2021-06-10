@@ -125,8 +125,8 @@
             </v-icon>
           </v-btn>
         </v-card-title>
-        <v-card-text>
-          <p class="body-1">
+        <v-card-text class="pb-3">
+          <p class="body-1 font-weight-medium text-center">
             {{ dialogItem.comment }}
           </p>
           <p
@@ -189,7 +189,7 @@ export default {
   methods: {
     loadData() {
       this.loading = true
-      this.$http.get(apiUrl).then((r) => {
+      this.$http.get(apiUrl).then(r => {
         this.items = r.data
         this.loading = false
       })
@@ -226,10 +226,10 @@ export default {
       if (this.item.id) {
         await this.$http
           .put([apiUrl, this.item.id].join("/"), this.item)
-          .then((r) => {
+          .then(r => {
             this.items.splice()
             this.items.splice(
-              this.items.findIndex((e) => e.id === this.item.id),
+              this.items.findIndex(e => e.id === this.item.id),
               1,
               r.data,
             )
@@ -237,7 +237,7 @@ export default {
       } else {
         await this.$http
           .post(apiUrl, this.item)
-          .then((r) => this.items.unshift(r.data))
+          .then(r => this.items.unshift(r.data))
       }
       this.dialogLoading = false
       this.dialog = false
@@ -251,7 +251,7 @@ export default {
 
   computed: {
     currentItems() {
-      let items = this.items.filter((e) => {
+      let items = this.items.filter(e => {
         if (this.mode === this.modes.food) {
           return e.is_food
         } else if (this.mode === this.modes.plus) {

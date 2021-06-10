@@ -8,14 +8,15 @@
           :class="{ 'plans-table_finished': item.is_finished }"
           v-touch="{
             left: () => $refs.DeleteDialog.open(item),
+            right: () => $emit('open', item),
           }"
         >
-          <td @click="$emit('open', item)">
+          <td @click="$refs.ViewDialog.open(item)">
             <span class="plans-table__plan-comment">
               {{ item.comment }}
-              <span class="grey--text ml-1 caption" v-if="item.time">
-                {{ item.time | time }}
-              </span>
+            </span>
+            <span class="grey--text ml-1 caption" v-if="item.time">
+              {{ item.time | time }}
             </span>
           </td>
           <td width="60">
@@ -35,11 +36,13 @@
       </tbody>
     </v-simple-table>
     <DeleteDialog @deleted="deleted" label="план" ref="DeleteDialog" />
+    <ViewDialog ref="ViewDialog" />
   </div>
 </template>
 
 <script>
 import DeleteDialog from "@/components/DeleteDialog"
+import ViewDialog from "./ViewDialog"
 import { API_URL } from "./"
 
 export default {
@@ -49,7 +52,7 @@ export default {
     },
   },
 
-  components: { DeleteDialog },
+  components: { DeleteDialog, ViewDialog },
 
   methods: {
     async toggle(item) {

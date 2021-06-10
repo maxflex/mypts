@@ -1,8 +1,13 @@
 import Vue from "vue"
+import moment from "moment"
 
 const filters = {
   formatPts(value) {
     return Number(value).toLocaleString()
+  },
+
+  dateTime(date) {
+    return moment(date).format("dddd D MMMM в HH:mm")
   },
 
   time(value) {

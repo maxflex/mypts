@@ -7,7 +7,7 @@ class Achievement extends HasPts
     protected $fillable = [
         'name', 'desc', 'pts', 'achieved_at'
     ];
-    protected $appends = ['is_achieved'];
+    protected $appends = ['is_achieved', 'desc_html'];
 
     public function getIsAchievedAttribute()
     {
